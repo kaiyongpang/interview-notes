@@ -547,6 +547,8 @@
           <li><a href="#kp-2-2">2.2 ReAct / Plan-and-Execute / Reflexion</a></li>
           <li><a href="#kp-2-3">2.3 手写 Loop vs LangGraph 状态机</a></li>
           <li><a href="#kp-2-4">2.4 持久化执行 (Durable Execution)</a></li>
+          <li><a href="#kp-2-5">2.5 多轮对话：指代消解、槽位填充与切换</a></li>
+          <li><a href="#kp-2-6">2.6 框架与平台底层原理 (LangGraph/Spring AI/Dify)</a></li>
         </ul>
       </details>
 
@@ -557,6 +559,7 @@
           <li><a href="#kp-3-1">3.1 Working / Episodic / Semantic 分层记忆</a></li>
           <li><a href="#kp-3-2">3.2 Context Bloat 与 Lost-in-the-middle</a></li>
           <li><a href="#kp-3-3">3.3 KV-Cache 前缀命中优化实战</a></li>
+          <li><a href="#kp-3-4">3.4 Prompt Engineering 工程化与版本灰度</a></li>
         </ul>
       </details>
 
@@ -576,6 +579,8 @@
           <li><a href="#kp-5-1">5.1 Naive RAG vs Agentic RAG (CRAG/Self-RAG)</a></li>
           <li><a href="#kp-5-2">5.2 混合检索、Rerank 与分块策略</a></li>
           <li><a href="#kp-5-3">5.3 行级/列级数据权限 (ACL) 隔离</a></li>
+          <li><a href="#kp-5-4">5.4 多源异构数据清洗与向量索引调优</a></li>
+          <li><a href="#kp-5-5">5.5 知识图谱融合 (GraphRAG / LightRAG)</a></li>
         </ul>
       </details>
 
@@ -615,7 +620,7 @@
       <p>以<strong>高频真题 + 架构图解 + 追问树（Follow-up Tree）</strong>为核心，聚焦生产级 AI Agent 的确定性边界、状态机编排、MCP 工具链、企业级安全与 AgentOps 评测。</p>
       <div class="hero-meta">
         <span class="badge sys">压轴系统设计 × 3</span>
-        <span class="badge hot">高频核心考点 × 23</span>
+        <span class="badge hot">高频核心考点 × 28</span>
         <span class="badge sec">Python + Java/Spring AI 对照</span>
         <span class="badge eng">支持离线自测模式</span>
       </div>
@@ -1030,6 +1035,88 @@
           </ul>
         </div>
       </div>
+
+      <!-- 2.5 -->
+      <div class="kp" id="kp-2-5" data-tags="hot eng">
+        <div class="kp-header">
+          <h3 class="kp-title">2.5 多轮对话核心模块：指代消解、槽位填充与话题切换</h3>
+          <div class="kp-tags"><span class="badge hot">高频必考</span><span class="badge eng">对话状态机</span></div>
+        </div>
+        <div class="kp-question">面试原题：在多轮对话中，用户经常省略主语（“帮我改到明天”）、中途插话问别的事（Topic Switch），或者参数没给全。如何设计一个不乱套的多轮对话状态管理模块？</div>
+        <button class="kp-answer-toggle">👁 点击展开多轮对话状态管理架构</button>
+        <div class="kp-body">
+          <ul>
+            <li><strong>指代消解与查询改写（Coreference Resolution / Standalone Rewrite）</strong>：在进入路由或 RAG 检索前，先用轻量模型结合最近 3 轮历史将用户当前话术改写为语义完整的独立句（如把“那它的退款政策呢？”改写为“订单 ORD-12345 的退款政策是什么？”），彻底消除代词歧义。</li>
+            <li><strong>状态机驱动的槽位填充（Slot Filling）</strong>：在 State 中维护结构化的 <code>pending_intent</code> 与 <code>slots: dict</code>（如订票需要 <code>origin</code>, <code>dest</code>, <code>date</code>）。每轮用 Structured Output 提取已填槽位，确定性代码检查缺失项并生成澄清追问，只有槽位齐备才触发执行工具。</li>
+            <li><strong>话题切换与栈式上下文恢复（Intent Stack）</strong>：遇到中途插话（如退款填到一半突然问“你们客服电话是多少”），通过意图分类识别为 <code>SIDE_QUERY</code>，将其作为子流程响应后<strong>不清空原业务槽位栈</strong>，并在回复末尾自然引导回到未完成的退款流程。</li>
+          </ul>
+          <div class="followups">
+            <div class="followups-title">面试官连环追问</div>
+            <details class="fu">
+              <summary>追问：如果用户连续两轮都拒绝提供必填槽位，或者答非所问，怎么办？</summary>
+              <div class="fu-body">在 State 中记录 <code>slot_retry_count</code>，连续 2 次未能提取到有效槽位时触发<strong>确定性降级</strong>（给出带选项的快捷卡片按钮，或直接退出当前意图栈并提示转人工），避免 Agent 陷入死缠烂打式的追问循环。</div>
+            </details>
+          </div>
+        </div>
+      </div>
+
+      <!-- 2.6 -->
+      <div class="kp" id="kp-2-6" data-tags="sys hot eng">
+        <div class="kp-header">
+          <h3 class="kp-title">2.6 框架与平台底层设计思路：LangGraph / LangChain / Spring AI / Dify / Coze</h3>
+          <div class="kp-tags"><span class="badge sys">底层原理</span><span class="badge hot">高频必考</span><span class="badge eng">架构对比</span></div>
+        </div>
+        <div class="kp-question">面试原题：请对比 LangGraph、LangChain、Spring AI、Dify、Coze 的核心设计思路（不要只谈 API 调用），在企业里低代码平台和代码框架该怎么选？</div>
+        <button class="kp-answer-toggle">👁 点击展开五大框架/平台底层设计拆解</button>
+        <div class="kp-body">
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th style="width:16%">框架 / 平台</th>
+                  <th style="width:42%">核心设计抽象与底层机制</th>
+                  <th style="width:42%">工程边界与典型适用场景</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><strong>LangChain</strong></td>
+                  <td><strong>Runnable / LCEL（管道组合原语）</strong>：所有组件实现统一的 <code>invoke / stream / batch</code> 接口，通过 <code>|</code> 运算符构成有向链，原生支持异步事件流透传（<code>astream_events</code>）。</td>
+                  <td>擅长线性链式调用；但对<strong>有环状态流转、断点恢复</strong>支持极弱，复杂 Agent 已全面让位于 LangGraph。</td>
+                </tr>
+                <tr>
+                  <td><strong>LangGraph</strong></td>
+                  <td><strong>Pregel / BSP（整体同步并行）消息图</strong>：显式定义共享 <code>State</code>、归约器 <code>Reducer</code>（如 <code>add_messages</code>）、<code>Node</code> 与 <code>Conditional Edge</code>；每步执行完自动落盘 Checkpoint。</td>
+                  <td>支持任意有环图、Time-Travel 回溯、HITL <code>interrupt()</code> 挂起。适合复杂、长周期、高可控的生产级 Python Agent。</td>
+                </tr>
+                <tr>
+                  <td><strong>Spring AI</strong></td>
+                  <td><strong><code>ChatClient</code> + <code>Advisor</code> 责任链 + <code>ToolCallingManager</code></strong>：借鉴 Servlet Filter / Spring AOP 思想，通过 Advisor 无侵入织入记忆、RAG、审计与重试；统一抽象多模型驱动。</td>
+                  <td>天然融入 Spring Boot 微服务、事务、安全上下文与 Micrometer/OTel 监控，Java 企业级后端落地的首选底座。</td>
+                </tr>
+                <tr>
+                  <td><strong>Dify</strong></td>
+                  <td><strong>可视化 DAG 工作流引擎 + DSL 编译</strong>：前端画布导出声明式 YAML/JSON DSL，后端引擎解析拓扑排序调度节点，通过 <strong>Variable Pool（变量池）</strong> 管理跨节点命名空间与引用；内置独立沙箱跑代码节点。</td>
+                  <td>开箱即用的 RAG 知识库管理、Prompt 版本与运营后台，非常适合业务快速验证（PMF）与非核心运营流。</td>
+                </tr>
+                <tr>
+                  <td><strong>Coze (扣子)</strong></td>
+                  <td><strong>Plugin 插件生态 + 多 Agent 路由 + 会话变量隔离</strong>：把外部能力封装为标准化 OpenAPI 插件，结合卡片式 UI 输出与 Bot/Workflow 混合编排，托管式运行环境。</td>
+                  <td>C 端/IM 渠道（飞书/微信/Discord）敏捷搭建首选；但私有化深度定制、复杂企业数据库事务控制受限。</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <div class="followups">
+            <div class="followups-title">面试官连环追问</div>
+            <details class="fu">
+              <summary>追问：企业里应该直接用 Dify 还是用 LangGraph / Spring AI 自研？如果早期用 Dify 后面怎么演进？</summary>
+              <div class="fu-body">典型演进策略是<strong>“分层共存”</strong>：用 <strong>Dify</strong> 承接长尾运营需求、非核心内部知识问答与产品快速试错（让业务/PM 自己调 Prompt）；将<strong>核心高并发、强事务、深权限隔离</strong>的链路（如涉及资金、复杂订单状态机）下沉到 <strong>LangGraph / Spring AI</strong> 自研微服务，并通过统一 API/MCP 暴露给 Dify 调用，实现敏捷性与工程可控性的双赢。</div>
+            </details>
+          </div>
+        </div>
+      </div>
     </section>
 
     <!-- Chapter 3 -->
@@ -1125,6 +1212,23 @@
             <li><strong>严格前缀稳定性</strong>：System Prompt 头部只放完全静态的指令与固定排序的 Tool Schemas。</li>
             <li><strong>Append-Only 历史</strong>：动态时间、当前用户画像、检索结果统一追加在对话历史尾部（或最新 User Turn），切忌中途修改历史消息。</li>
             <li><strong>工具动态增删禁忌</strong>：不要每轮动态增删 Tool 定义列表（会破坏前缀缓存），如需控制权限，在 Tool 执行层拦截或通过状态机 Mask 限制。</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- 3.4 -->
+      <div class="kp" id="kp-3-4" data-tags="hot eng">
+        <div class="kp-header">
+          <h3 class="kp-title">3.4 Prompt Engineering 工程化：模块化模板、CoT 边界与版本灰度</h3>
+          <div class="kp-tags"><span class="badge hot">高频必考</span><span class="badge eng">PromptOps</span></div>
+        </div>
+        <div class="kp-question">面试原题：到了资深阶段，Prompt Engineering 不再是“写几句神奇咒语”，在生产系统里你是如何工程化管理、优化和迭代 Prompt 的？</div>
+        <button class="kp-answer-toggle">👁 点击展开 Prompt 工程化实践</button>
+        <div class="kp-body">
+          <ul>
+            <li><strong>结构化分层编排</strong>：采用 XML 标签明确划分区域（<code>&lt;role&gt;</code>、<code>&lt;policy_rules&gt;</code>、<code>&lt;few_shot_examples&gt;</code>、<code>&lt;untrusted_context&gt;</code>），提升模型指令遵循度并隔离不可信输入。</li>
+            <li><strong>CoT（思维链）的取舍边界</strong>：在推理型模型（o1/o3/R1）上<strong>不要</strong>强行要求显式输出冗余 CoT（模型内部已自带 Thinking，额外要求反而降智增耗）；在普通模型上通过 JSON Schema 先输出 <code>reasoning</code> 字段再输出 <code>decision</code> 字段，强制先思考后结论。</li>
+            <li><strong>PromptOps 版本与灰度发布</strong>：Prompt 与代码解耦，存入配置中心/Langfuse Prompt Registry 并绑定语义版本号（<code>v1.4.2</code>）；线上 Trace 必须记录每条请求命中的 <code>prompt_version</code>，配合 Golden Dataset Eval 门禁与 5% 流量 A/B 灰度，杜绝“改了一行 Prompt 线上全线崩盘”。</li>
           </ul>
         </div>
       </div>
@@ -1299,6 +1403,75 @@ async def execute_tool_safely(tool_call) -> str:
             绝对不能依赖 Prompt 指令“如果用户不是 HR 请不要输出薪酬信息”（模型会被绕过），也不能先向量检索 Top-10 再在应用层过滤（可能过滤完剩 0 条）。
           </div>
           <p><strong>正确做法（Pre-filtering 元数据下推）</strong>：文档入库切片时将权限标签（如 <code>dept: ["hr", "exec"]</code>, <code>acl_groups: [...]</code>）写入向量库 Payload；检索请求必须由服务端网关从 JWT 解析用户身份，将过滤条件作为 <strong>Pre-filter 下推到向量库引擎层（Milvus / Qdrant / Elasticsearch）</strong>，确保越权 Chunk 从物理上不会被召回。</p>
+        </div>
+      </div>
+
+      <!-- 5.4 -->
+      <div class="kp" id="kp-5-4" data-tags="sys hot eng">
+        <div class="kp-header">
+          <h3 class="kp-title">5.4 多源异构数据清洗、ETL 与向量索引调优 (HNSW vs IVF)</h3>
+          <div class="kp-tags"><span class="badge sys">知识库建设</span><span class="badge hot">高频必考</span><span class="badge eng">向量库调优</span></div>
+        </div>
+        <div class="kp-question">面试原题：企业知识库往往混杂扫描版 PDF、跨页合并单元格的 Excel/Word 表格、带架构图的 PPT 以及结构化数据库。你如何搭建高可用的多源异构数据清洗与索引流水线？向量库索引参数怎么调？</div>
+        <button class="kp-answer-toggle">👁 点击展开 ETL 清洗与向量索引调优</button>
+        <div class="kp-body">
+          <h4>一、 多源异构数据清洗与结构保真（Garbage In, Garbage Out）</h4>
+          <ul>
+            <li><strong>版面感知解析（Layout-Aware Parsing）</strong>：摒弃简单的 <code>PyPDF2</code> 纯文本提取（会打乱双栏排版与页眉页脚噪音）。采用 <strong>MinerU / Docling / Unstructured</strong> 识别标题层级、双栏阅读顺序；对<strong>跨页表格</strong>还原为 Markdown/HTML 表格并把表头冗余复制到子 Chunk 中；对关键架构图/流程图调用 VLM（多模态大模型）生成结构化文字描述一并入库。</li>
+            <li><strong>增量同步与幂等去重</strong>：为每个源文档计算 <code>content_hash</code> 与文档级 <code>doc_id</code>，变更时先按 <code>doc_id</code> 软删除或原子替换旧 Chunks，防止同一份文档修改 3 次后库里残留 3 份过期切片。</li>
+            <li><strong>Embedding 选型与 MRL 降维</strong>：依据语料语种选型（如 BGE-M3 支持中英双语 + 稠密/稀疏双输出）；利用支持 <strong>MRL（Matryoshka Representation Learning）</strong> 的模型将 1536/3072 维裁剪至 512/1024 维，在几乎不损失召回率下将内存与检索开销砍半。</li>
+          </ul>
+
+          <h4>二、 向量数据库核心索引选型与调优（Milvus / Qdrant / pgvector）</h4>
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>索引类型</th>
+                  <th>底层原理</th>
+                  <th>优势与适用规模</th>
+                  <th>核心调优参数与代价</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><strong>HNSW</strong><br>(分层可导航小世界图)</td>
+                  <td>多层跳表式图索引，查询时从顶层稀疏图贪心下钻到底层精确邻域</td>
+                  <td><strong>高召回 (&gt;95%)、毫秒级低延迟</strong>；适合千万级以下热数据</td>
+                  <td>内存占用高；建图慢。关键参数：<code>M</code>（节点最大边数，16~32）、<code>efConstruction</code>（建库精度）、<code>efSearch</code>（查询精度/延迟权衡）。</td>
+                </tr>
+                <tr>
+                  <td><strong>IVF_PQ / DiskANN</strong></td>
+                  <td>K-Means 聚类倒排桶 + 乘积量化压缩（或 SSD 磁盘图索引）</td>
+                  <td><strong>内存极省（压缩 10x+）</strong>；适合亿级大规模冷热分层场景</td>
+                  <td>量化会损失部分召回，需配合 <code>nprobe</code>（探测桶数）调优并用 Rerank 兜底。</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- 5.5 -->
+      <div class="kp" id="kp-5-5" data-tags="sys hot">
+        <div class="kp-header">
+          <h3 class="kp-title">5.5 知识图谱融合 (GraphRAG / LightRAG) 与混合召回架构</h3>
+          <div class="kp-tags"><span class="badge sys">前沿架构</span><span class="badge hot">高频必考</span></div>
+        </div>
+        <div class="kp-question">面试原题：什么时候纯向量检索已经不够用了，必须引入知识图谱（GraphRAG）？在实际落地时，GraphRAG 有哪些坑（成本、更新、延迟）？</div>
+        <button class="kp-answer-toggle">👁 点击展开 GraphRAG 架构与落地 Trade-off</button>
+        <div class="kp-body">
+          <h4>一、 向量检索的盲区 vs GraphRAG 价值</h4>
+          <ul>
+            <li><strong>多跳关联推理（Multi-hop）</strong>：例如“A 公司的最大供应商的法人还控制了哪些高风险关联企业？”——单靠 Chunk 向量相似度无法把分散在 5 份文档里的实体跳连起来。</li>
+            <li><strong>全局宏观总结（Global Sensemaking）</strong>：例如“总结这 500 份项目复盘文档中最常出现的三大系统性故障根因”。Top-K 向量检索只能看到局部 5 个碎片，而 GraphRAG 通过<strong>实体/关系抽取 → Leiden 社区聚类 → 预生成社区摘要（Community Summary）</strong>，在查询时做 Map-Reduce 式全局聚合。</li>
+          </ul>
+          <h4>二、 工程落地三大痛点与优化（LightRAG / 混合图谱）</h4>
+          <ul>
+            <li><strong>痛点 1：建图 Token 成本极高</strong> → 严格限制 Schema（只抽取预定义核心实体与关系类型，不做开放式全量抽取），或采用 <strong>LightRAG</strong> 的双层键值图检索替代昂贵的逐层社区摘要。</li>
+            <li><strong>痛点 2：动态增量更新难</strong> → 业务文档每天更新时，避免全图重聚类；采用“局部子图增量合并 + 实体消歧（Entity Resolution）”策略，仅重算受影响邻域。</li>
+            <li><strong>痛点 3：查询延迟高</strong> → 采用<strong>路由分流</strong>：事实型局部问题走 Hybrid Vector Search（&lt;100ms），仅当意图分类识别出“全局综述”或“多跳关系排查”时才路由到 GraphRAG 引擎。</li>
+          </ul>
         </div>
       </div>
     </section>
