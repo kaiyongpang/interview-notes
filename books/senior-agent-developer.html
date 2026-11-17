@@ -615,6 +615,7 @@
           <li><a href="#kp-8-2">8.2 非确定性系统 CI/CD Eval 与状态断言</a></li>
           <li><a href="#kp-8-3">8.3 线上延迟 (TTFT) 与成本优化组合拳</a></li>
           <li><a href="#kp-8-4">8.4 RAG 三元组评测与合成数据反馈飞轮</a></li>
+          <li><a href="#kp-8-5">8.5 Agent 返回结果的四层语义测试实战</a></li>
         </ul>
       </details>
 
@@ -645,7 +646,7 @@
       <p>以<strong>高频真题 + 架构图解 + 追问树（Follow-up Tree）</strong>为核心，聚焦生产级 AI Agent 的确定性边界、状态机编排、MCP 工具链、企业级安全与 AgentOps 评测。</p>
       <div class="hero-meta">
         <span class="badge sys">压轴系统设计 × 3</span>
-        <span class="badge hot">高频核心考点 × 36</span>
+        <span class="badge hot">高频核心考点 × 37</span>
         <span class="badge sec">Python + Java/Spring AI 对照</span>
         <span class="badge eng">支持离线自测模式</span>
       </div>
@@ -1213,12 +1214,19 @@
       <!-- 3.1 -->
       <div class="kp" id="kp-3-1" data-tags="sys hot">
         <div class="kp-header">
-          <h3 class="kp-title">3.1 分层记忆架构：Working / Episodic / Semantic</h3>
+          <h3 class="kp-title">3.1 大模型有记忆吗？分层记忆架构 (Working / Episodic / Semantic)</h3>
           <div class="kp-tags"><span class="badge sys">架构设计</span><span class="badge hot">高频必考</span></div>
         </div>
-        <div class="kp-question">面试原题：随着 Agent 运行轮次增加或跨天服务同一个用户，如何设计一套可扩展的分层记忆系统？</div>
-        <button class="kp-answer-toggle">👁 点击展开三层记忆架构与图解</button>
+        <div class="kp-question">面试原题：大模型本身有记忆吗？随着 Agent 运行轮次增加或跨天服务同一个用户，如何设计一套可扩展的分层记忆系统？</div>
+        <button class="kp-answer-toggle">👁 点击展开无状态本质与三层记忆架构</button>
         <div class="kp-body">
+          <h4>一、 直球回答：大模型本身是完全无状态（Stateless）的</h4>
+          <p>严格来说，LLM 推理本身<strong>没有跨请求的记忆</strong>——每次 API 调用都是一次独立的前向传播，模型“记住”上下文的唯一方式是应用层把历史消息重新塞回 Input Token 序列中。业内常说的“记忆”分为两类：</p>
+          <ul>
+            <li><strong>参数化记忆（Parametric Memory）</strong>：预训练和微调固化在模型权重里的静态知识（难更新、易幻觉）。</li>
+            <li><strong>非参数化外部记忆（External / In-Context Memory）</strong>：由 Agent 工程层管理的上下文窗口、向量库与数据库，按生命周期分为以下三层：</li>
+          </ul>
+          <h4>二、 生产级三层记忆架构</h4>
           <ul>
             <li><strong>Working Memory（工作记忆）</strong>：存在于当前 LLM Context Window 中，存放系统指令、最近 N 轮对话及当前任务的 Tool Observation。生命周期 = 单次任务/会话。</li>
             <li><strong>Episodic Memory（情景记忆）</strong>：存储“过去做过什么、成功/失败轨迹”（如某个客户上周投诉过物流延迟且已补偿）。存于 Vector DB + 元数据索引，通过语义+时间衰减加权召回。</li>
@@ -1271,16 +1279,19 @@
       <!-- 3.2 -->
       <div class="kp" id="kp-3-2" data-tags="hot">
         <div class="kp-header">
-          <h3 class="kp-title">3.2 Context Bloat 与 Lost-in-the-middle 治理</h3>
+          <h3 class="kp-title">3.2 Context 超了怎么办？Context Bloat 与 Lost-in-the-middle 治理</h3>
           <div class="kp-tags"><span class="badge hot">高频必考</span></div>
         </div>
-        <div class="kp-question">面试原题：Tool 返回了 50KB 的日志或网页 HTML，直接塞进上下文不仅烧钱，模型还会变笨（Lost-in-the-middle）。工程上怎么治理？</div>
-        <button class="kp-answer-toggle">👁 点击展开上下文瘦身策略</button>
+        <div class="kp-question">面试原题：Agent 跑着跑着 Context 超出模型最大窗口（或预算阈值）了怎么办？Tool 返回 50KB 日志/网页直接塞进去导致模型变笨（Lost-in-the-middle），工程上怎么分级治理？</div>
+        <button class="kp-answer-toggle">👁 点击展开 Context 超限分级处理流水线</button>
         <div class="kp-body">
+          <h4>Context 超限五级工程应对流水线（预防 → 瘦身 → 分治 → 兜底）</h4>
           <ul>
-            <li><strong>Tool Observation 截断与指针化（Offloading）</strong>：大体积返回值不直接进 Context，而是落盘到临时文件/Redis 并返回 <code>artifact_id</code> + 前 50 行摘要；Agent 需要细节时再调用 <code>read_chunk(artifact_id, line_range)</code> 或 <code>grep</code> 按需读取。</li>
-            <li><strong>结构化滑动压缩（Compaction）</strong>：超过 Token 预算阈值（如 60%）时，保留 System Prompt + 最近 K 轮完整交互，把更早的 Tool 轨迹压缩为结构化状态摘要（保留已确认事实、失败路径，丢弃冗余中间输出）。</li>
-            <li><strong>重要约束置底/置顶</strong>：利用注意力“U 型分布”规律，核心目标和硬性禁止规则放在 System Prompt 头部或最新 User 消息尾部，避免埋在海量中间 Observation 里。</li>
+            <li><strong>L1 预算预警（Token Budget Guard）</strong>：每次调用 LLM 前用 Tokenizer（如 <code>tiktoken</code>）精确计算输入 Token；当达到窗口上限的 60%~70% 时主动触发压缩，绝不等到 API 报 <code>context_length_exceeded</code>。</li>
+            <li><strong>L2 Tool Observation 截断与指针化（Offloading）</strong>：大体积返回值不直接进 Context，而是落盘到临时文件/Redis 并返回 <code>artifact_id</code> + 前 50 行摘要；Agent 需要细节时再调用 <code>read_chunk(artifact_id, line_range)</code> 或 <code>grep</code> 按需读取。</li>
+            <li><strong>L3 结构化滑动压缩（Compaction / Summarization）</strong>：保留 System Prompt + 最近 K 轮完整交互，把更早的 Tool 轨迹用小模型异步压缩为结构化状态摘要（保留已确认事实、失败路径，丢弃冗余中间输出）。</li>
+            <li><strong>L4 单文档超大时的 Map-Reduce / 检索分治</strong>：若单次输入本身超限（如 300 页 PDF），拆分为 Chunk 并行抽取要点（Map）再汇总（Reduce），或切入 RAG 按需召回。</li>
+            <li><strong>L5 重要约束置底/置顶 + 兜底切换</strong>：利用注意力“U 型分布”规律把核心指令放首尾；极端情况下降级路由到更大窗口模型（如 1M/2M Context）或提示用户开启新会话并继承 Semantic Memory。</li>
           </ul>
         </div>
       </div>
@@ -1437,20 +1448,58 @@ async def execute_tool_safely(tool_call) -> str:
       </div>
 
       <!-- 4.5 -->
-      <div class="kp" id="kp-4-5" data-tags="sys eng">
+      <div class="kp" id="kp-4-5" data-tags="sys eng hot">
         <div class="kp-header">
-          <h3 class="kp-title">4.5 Agent Skills 与渐进式上下文加载 (Progressive Disclosure)</h3>
-          <div class="kp-tags"><span class="badge sys">前沿规范</span><span class="badge eng">Context 优化</span></div>
+          <h3 class="kp-title">4.5 Agent 发现 Skill 和 MCP 的底层原理与渐进式加载</h3>
+          <div class="kp-tags"><span class="badge sys">底层原理</span><span class="badge hot">高频必考</span><span class="badge eng">Context 优化</span></div>
         </div>
-        <div class="kp-question">面试原题：随着 Agent 要处理的垂直工作流越来越多（如代码审查、财报分析、K8s 排障），把所有 SOP 说明书都写进 System Prompt 会导致上下文臃肿和指令冲突，Agent Skills 模式怎么解决？</div>
-        <button class="kp-answer-toggle">👁 点击展开 Agent Skills 设计模式</button>
+        <div class="kp-question">面试原题：Agent 是如何发现并加载 Skill（技能包）和 MCP（工具服务）的？两者在底层发现机制、时机和上下文占用上有什么区别？</div>
+        <button class="kp-answer-toggle">👁 点击展开 Skill vs MCP 发现原理与对比</button>
         <div class="kp-body">
-          <p><strong>Agent Skills</strong> 是将特定领域的过程性知识（Workflow SOP、规范约束、配套脚本、参考模板）打包为独立文件夹（以 <code>SKILL.md</code> 为入口），核心设计原则是<strong>渐进式披露（Progressive Disclosure）</strong>：</p>
+          <h4>一、 Skill 的发现原理（文件系统扫描 + 渐进式披露 Progressive Disclosure）</h4>
+          <p><strong>Agent Skills</strong> 是将特定领域的工作流 SOP、规范约束与配套脚本打包为目录（以 <code>SKILL.md</code> 为入口），核心在于<strong>“先索引、后按需加载”</strong>：</p>
           <ul>
-            <li><strong>Level 1（启动常驻 ~50 Token/Skill）</strong>：System Prompt 仅加载所有 Skill 的 <code>name + description</code> 轻量化索引。</li>
-            <li><strong>Level 2（触发加载）</strong>：当用户意图匹配某 Skill 描述时，Agent 再通过文件读取工具按需加载完整的 <code>SKILL.md</code> 指令。</li>
-            <li><strong>Level 3（按需执行）</strong>：仅在需要时读取附属 <code>references/</code> 文档或执行 <code>scripts/</code> 确定性脚本，既保留无限扩展能力，又完美保护 KV-Cache 前缀与注意力信噪比。</li>
+            <li><strong>Step 1（启动扫描与 Frontmatter 解析）</strong>：Agent Host 启动时扫描约定目录（如 <code>.skills/</code>、<code>~/.agent/skills/</code>），仅解析每个 <code>SKILL.md</code> 顶部的 <strong>YAML Frontmatter（<code>name</code> + <code>description</code>）</strong>，以极低 Token（约 50 Token/个）注入 System Prompt 作为能力目录。</li>
+            <li><strong>Step 2（语义匹配与按需读取）</strong>：当用户意图命中某个 Skill 描述时，LLM 主动调用 <code>read_file</code> 读取该 <code>SKILL.md</code> 的完整指令正文。</li>
+            <li><strong>Step 3（附属资源惰性执行）</strong>：仅在步骤需要时读取 <code>references/</code> 参考文档或调用 <code>scripts/</code> 确定性脚本，既保留无限扩展能力，又完美保护 KV-Cache 前缀。</li>
           </ul>
+
+          <h4>二、 MCP 的发现原理（JSON-RPC 运行时握手 + 能力协商 + 热推送）</h4>
+          <p><strong>MCP（Model Context Protocol）</strong> 是基于 JSON-RPC 2.0 的运行时连接协议，发现过程分为三个标准阶段：</p>
+          <ul>
+            <li><strong>Step 1（建连与 <code>initialize</code> 握手）</strong>：MCP Client 通过 Stdio（本地子进程）或 Streamable HTTP（远程服务）连接 MCP Server，发送 <code>initialize</code> 请求交换协议版本与双方 Capabilities（支持 Tools / Resources / Prompts）。</li>
+            <li><strong>Step 2（动态枚举 <code>tools/list</code>）</strong>：握手完成后，Client 调用 <code>tools/list</code>（以及 <code>resources/list</code>、<code>prompts/list</code>）拉取所有工具的名称、描述与 <strong>JSON Schema 参数定义</strong>，注册为 LLM 的 Function Calling <code>tools</code> 参数（工具过多时配合 4.2 的 Tool-RAG 过滤）。</li>
+            <li><strong>Step 3（运行时热更新）</strong>：当外部服务端新增或下线工具时，Server 主动推送 <code>notifications/tools/list_changed</code> 通知，Client 重新拉取列表即可完成热发现，无需重启 Agent。</li>
+          </ul>
+
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>对比维度</th>
+                  <th>Agent Skills 发现机制</th>
+                  <th>MCP 发现机制</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><strong>发现载体</strong></td>
+                  <td>本地文件系统目录 + <code>SKILL.md</code> YAML Frontmatter</td>
+                  <td>JSON-RPC 2.0 <code>initialize</code> + <code>tools/list</code> 接口</td>
+                </tr>
+                <tr>
+                  <td><strong>加载时机</strong></td>
+                  <td>启动仅加载索引（~50 Token），触发后按需读正文</td>
+                  <td>建连后即拉取 Tool Schema（或经 Tool-RAG 按需挂载）</td>
+                </tr>
+                <tr>
+                  <td><strong>本质定位</strong></td>
+                  <td>教 Agent <strong>“怎么按规范做事”</strong>（过程性知识 SOP）</td>
+                  <td>给 Agent <strong>“能调用的外部手脚与数据源”</strong>（执行契约）</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
         </div>
       </div>
     </section>
@@ -1462,13 +1511,19 @@ async def execute_tool_safely(tool_call) -> str:
       <!-- 5.1 -->
       <div class="kp" id="kp-5-1" data-tags="hot">
         <div class="kp-header">
-          <h3 class="kp-title">5.1 Naive RAG vs Agentic RAG (CRAG / Self-RAG)</h3>
+          <h3 class="kp-title">5.1 RAG 是什么？Naive RAG vs Agentic RAG (CRAG / Self-RAG)</h3>
           <div class="kp-tags"><span class="badge hot">高频必考</span></div>
         </div>
-        <div class="kp-question">面试原题：传统的“Embedding → TopK → 塞进 Prompt”在复杂企业问答中为什么经常失效？Agentic RAG 是怎么改进的？</div>
-        <button class="kp-answer-toggle">👁 点击展开演进对比</button>
+        <div class="kp-question">面试原题：什么是 RAG？在百万级长上下文（Long Context）模型已经普及的今天，为什么还需要 RAG？传统的 Naive RAG 在复杂企业问答中为什么经常失效？</div>
+        <button class="kp-answer-toggle">👁 点击展开 RAG 本质与 Agentic RAG 演进</button>
         <div class="kp-body">
-          <p>Naive RAG 是单次静态流水线，面对模糊提问、多跳推理或召回噪音时无能为力。<strong>Agentic RAG 将“检索”变成 Agent 的一个可迭代工具</strong>：</p>
+          <h4>一、 RAG 是什么？为什么百万上下文取代不了它？</h4>
+          <p><strong>RAG（Retrieval-Augmented Generation，检索增强生成）</strong> 是在 LLM 生成答案前，先从外部知识库动态检索出最相关的片段作为上下文依据，再让模型基于证据作答的架构模式（本质是给无状态大模型外挂“可实时更新、可溯源的开卷参考书”）。</p>
+          <ul>
+            <li><strong>为什么不直接把全量文档塞进 1M 上下文？</strong>① <strong>成本与延迟</strong>：每次提问都重传几十万 Token 会导致极高的 TTFT 延迟与账单爆炸；② <strong>注意力稀释（Lost-in-the-middle）</strong>：无关噪音越多，推理准确率越低；③ <strong>企业权限隔离（ACL）</strong>：全量塞入无法在检索阶段物理隔离不同员工的数据权限。</li>
+          </ul>
+          <h4>二、 Naive RAG 痛点与 Agentic RAG 演进</h4>
+          <p>Naive RAG（Embedding → TopK → 塞进 Prompt）是单次静态流水线，面对模糊提问、多跳推理或召回噪音时无能为力。<strong>Agentic RAG 将“检索”变成 Agent 的一个可迭代工具</strong>：</p>
           <ul>
             <li><strong>Query Rewriting &amp; Decomposition</strong>：将复杂问题拆解为多个子查询并行检索，并补充同义词/领域缩写。</li>
             <li><strong>CRAG（Corrective RAG）</strong>：引入轻量级相关性评分器，若召回文档相关性低于阈值，自动触发 Rewrite 二次检索或降级到 Web/备用数据源。</li>
@@ -1916,6 +1971,48 @@ public class OrderToolService {
             <li><strong>Context Precision / Recall（上下文精确度/召回率）</strong>：检索排在前面的 Chunk 是否真的有用，有没有把关键依据漏掉？（测<strong>检索器</strong>）。</li>
             <li><strong>合成测试数据与反馈飞轮（Synthetic Data &amp; Feedback Loop）</strong>：冷启动期从真实文档反向生成 Q-A-Context 三元组（Synthetic Test Data）并加入对抗性干扰样本；上线后收集用户点踩（👍/👎）与人工标注（Human Labeling）做 Error Analysis，持续反哺 Golden Dataset 迭代。</li>
           </ul>
+        </div>
+      </div>
+
+      <!-- 8.5 -->
+      <div class="kp" id="kp-8-5" data-tags="eng hot">
+        <div class="kp-header">
+          <h3 class="kp-title">8.5 对 Agent 返回结果如何做语义测试 (Semantic Testing)</h3>
+          <div class="kp-tags"><span class="badge eng">Eval 实战</span><span class="badge hot">高频必考</span></div>
+        </div>
+        <div class="kp-question">面试原题：Agent 每次返回的自然语言措辞都不一样，不能用 `assert resp == expected`，那在自动化测试中具体怎么对 Agent 的返回做“语义测试”？</div>
+        <button class="kp-answer-toggle">👁 点击展开四层语义测试金字塔与代码示例</button>
+        <div class="kp-body">
+          <h4>四层语义测试金字塔（成本由低到高、确定性由高到低）</h4>
+          <ol>
+            <li><strong>L1 确定性语义锚点（零成本/毫秒级）</strong>：先用结构化断言兜底——校验 JSON Schema、必含实体/数字（如退款金额 <code>$50.00</code>、订单号）以及绝对禁词（如不能出现竞品名或内部堆栈）。</li>
+            <li><strong>L2 向量余弦相似度 / BERTScore（低成本）</strong>：将 Agent 输出与标准参考答案（Golden Answer）做 Embedding 编码，计算 Cosine Similarity（通常阈值 ≥ 0.82）；适合简短事实型问答回归，但<strong>无法识别“语义相反但用词相似”</strong>（如“支持退款” vs “不支持退款”）。</li>
+            <li><strong>L3 NLI（自然语言推理）蕴含与矛盾检测</strong>：使用轻量级 Cross-Encoder NLI 模型（如 DeBERTa-NLI）判断输出与参考事实之间是 <code>Entailment（蕴含）</code> 还是 <code>Contradiction（矛盾）</code>，专门用来低成本捕捉逻辑反转与幻觉。</li>
+            <li><strong>L4 LLM-as-a-Judge 语义断言（高准确度）</strong>：用强模型按明确 Rubric（或 DeepEval / Promptfoo 语义断言）评估“是否完整传达了核心意图且无幻觉”，并配合 Pairwise 对照与多轮采样通过率（如 Pass@3）消除单次波动。</li>
+          </ol>
+          <div class="code-label">Python · pytest 分层语义测试示例</div>
+<pre><code>import numpy as np
+
+def cosine_sim(a: list[float], b: list[float]) -> float:
+    return float(np.dot(a, b) / (np.linalg.norm(a) * np.linalg.norm(b)))
+
+async def test_refund_agent_semantic_response():
+    resp = await agent.run("订单 ORD-123456 昨天买的衣服尺码不合适，能退吗？")
+
+    # L1: 确定性语义锚点（关键实体与业务结论不能缺）
+    assert "ORD-123456" in resp
+    assert any(k in resp for k in ["7天", "无理由", "支持退货"])
+
+    # L2: Embedding 余弦相似度粗筛
+    sim = cosine_sim(embed(resp), embed("订单 ORD-123456 符合 7 天无理由退货政策，可为您办理退款。"))
+    assert sim >= 0.80, f"语义偏离过大: {sim:.3f}"
+
+    # L4: LLM-as-a-Judge 语义等价与忠实度终审
+    judge = await llm_judge.evaluate(
+        actual=resp,
+        criteria="回答必须明确告知支持退货、不承诺超出政策外的赔付，且语气礼貌。"
+    )
+    assert judge.passed, judge.reason</code></pre>
         </div>
       </div>
     </section>
