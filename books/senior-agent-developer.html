@@ -524,10 +524,9 @@
     <nav class="toc" id="toc">
       <div class="toc-part">前置对齐</div>
       <details open>
-        <summary>0. 核心术语边界与全景清单</summary>
+        <summary>0. 核心术语边界</summary>
         <ul>
           <li><a href="#sec-glossary">0.1 概念边界与面试避坑术语表</a></li>
-          <li><a href="#kp-0-2">0.2 八维度全景能力 Checklist (160 词条)</a></li>
         </ul>
       </details>
 
@@ -568,10 +567,9 @@
         <summary>4. 工具调用、MCP 与沙箱</summary>
         <ul>
           <li><a href="#kp-4-1">4.1 Schema 校验与自愈重试 (Self-Correction)</a></li>
-          <li><a href="#kp-4-2">4.2 MCP 协议架构与 Tool-RAG 路由</a></li>
+          <li><a href="#kp-4-2">4.2 MCP 与 Agent Skills：发现原理、架构与 Tool-RAG</a></li>
           <li><a href="#kp-4-3">4.3 代码执行沙箱 (E2B / MicroVM)</a></li>
           <li><a href="#kp-4-4">4.4 Computer Use 与 Realtime Voice 差异</a></li>
-          <li><a href="#kp-4-5">4.5 Agent Skills 与渐进式上下文加载</a></li>
         </ul>
       </details>
 
@@ -612,10 +610,9 @@
         <summary>8. AgentOps、Eval 与成本优化</summary>
         <ul>
           <li><a href="#kp-8-1">8.1 OpenTelemetry / Langfuse 全链路 Trace</a></li>
-          <li><a href="#kp-8-2">8.2 非确定性系统 CI/CD Eval 与状态断言</a></li>
+          <li><a href="#kp-8-2">8.2 自动化评测与四层语义测试实战</a></li>
           <li><a href="#kp-8-3">8.3 线上延迟 (TTFT) 与成本优化组合拳</a></li>
           <li><a href="#kp-8-4">8.4 RAG 三元组评测与合成数据反馈飞轮</a></li>
-          <li><a href="#kp-8-5">8.5 Agent 返回结果的四层语义测试实战</a></li>
         </ul>
       </details>
 
@@ -646,7 +643,7 @@
       <p>以<strong>高频真题 + 架构图解 + 追问树（Follow-up Tree）</strong>为核心，聚焦生产级 AI Agent 的确定性边界、状态机编排、MCP 工具链、企业级安全与 AgentOps 评测。</p>
       <div class="hero-meta">
         <span class="badge sys">压轴系统设计 × 3</span>
-        <span class="badge hot">高频核心考点 × 37</span>
+        <span class="badge hot">高频核心考点 × 42</span>
         <span class="badge sec">Python + Java/Spring AI 对照</span>
         <span class="badge eng">支持离线自测模式</span>
       </div>
@@ -700,68 +697,6 @@
                 <td><strong>致命三要素</strong><br><code>The Lethal Trifecta</code></td>
                 <td>当 Agent 同时具备：①访问私有数据、②暴露于不可信外部输入、③拥有外发或状态变更能力时，构成间接提示词注入高危攻击面。</td>
                 <td>只做输入敏感词过滤防不住网页/邮件里隐藏的 Indirect Prompt Injection。</td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-      </div>
-
-      <!-- 0.2 -->
-      <div class="kp" id="kp-0-2" data-tags="sys hot">
-        <div class="kp-header">
-          <h3 class="kp-title">0.2 八维度全景能力 Checklist（160 词条索引）</h3>
-          <div class="kp-tags"><span class="badge sys">全景地图</span><span class="badge hot">考前自检</span></div>
-        </div>
-        <p>覆盖 AI Agent 工程师完整能力树的 8 大维度，点击对应模块即可直达深度考点：</p>
-        <div class="table-wrap">
-          <table>
-            <thead>
-              <tr>
-                <th style="width:18%">能力维度</th>
-                <th style="width:62%">核心词条清单</th>
-                <th style="width:20%">对应章节</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td><strong>1. LLMs</strong></td>
-                <td>Tokenization · Transformer · Self-Attention · Context Windows · KV Cache · Temperature &amp; Top-p · System Prompts · Few-shot · CoT · Reasoning Models · Structured Outputs · Prompt Caching · Token Pricing · Hallucinations · Multimodal · LoRA · QLoRA · Quantization · Distillation · Open vs Closed</td>
-                <td><a href="#kp-9-1">模块 9 (9.1–9.2)</a><br><a href="#kp-3-3">模块 3 (3.3–3.4)</a></td>
-              </tr>
-              <tr>
-                <td><strong>2. RAG</strong></td>
-                <td>Embeddings · Cosine Similarity · Chunking · Vector DBs · pgvector · HNSW · Metadata Filtering · BM25 · Hybrid Search · Reranking · Query Rewriting · HyDE · Contextual Retrieval · Parent-Child · Document Parsing · Citations · GraphRAG · Agentic RAG · Recall@k · MRR &amp; nDCG</td>
-                <td><a href="#kp-5-1">模块 5 (5.1–5.6)</a></td>
-              </tr>
-              <tr>
-                <td><strong>3. AI Agents</strong></td>
-                <td>Tool Calling · Agent Loop · ReAct · Planning · Reflection · Short/Long-term Memory · MCP Servers/Clients · Agent Skills · Multi-agent Handoffs · Orchestrator-Worker · LangGraph · OpenAI Agents SDK · State &amp; Checkpoints · HITL · Context Engineering · Compaction · Stop Conditions · A2A Protocol</td>
-                <td><a href="#kp-1-1">模块 1–4</a><br><a href="#kp-6-1">模块 6 (6.1–6.4)</a></td>
-              </tr>
-              <tr>
-                <td><strong>4. Evals</strong></td>
-                <td>Golden Datasets · Error Analysis · LLM as a Judge · Pairwise Comparison · Rubric Scoring · Faithfulness · Answer Relevance · Context Precision · Tool Call Accuracy · Trajectory Evals · Regression Evals in CI · A/B Testing Prompts · Human Labeling · Synthetic Test Data · Tracing · Langfuse · OpenTelemetry · P95 Latency · Cost/Req · Feedback Loops</td>
-                <td><a href="#kp-8-1">模块 8 (8.1–8.4)</a></td>
-              </tr>
-              <tr>
-                <td><strong>5. AI System Design</strong></td>
-                <td>Model Routing · Fallbacks · Semantic Caching · Prefix Caching · Token Budgets · Streaming · TTFT · Throughput vs Latency · vLLM · Continuous Batching · PagedAttention · Speculative Decoding · GPU vs API Cost · Batch Inference · Async Pipelines · Rate Limits · Multi-tenant · RAG vs Fine-tuning · Context Mgmt · Cost Opt</td>
-                <td><a href="#kp-1-1">模块 1</a> · <a href="#kp-8-3">8.3</a><br><a href="#kp-9-2">模块 9 (9.2–9.3)</a></td>
-              </tr>
-              <tr>
-                <td><strong>6. AI Security</strong></td>
-                <td>Prompt Injection · Indirect Injection · Jailbreaks · OWASP Top 10 for LLMs · Input Guardrails · Output Validation · PII Redaction · Data Leakage · Least-privilege Tools · Sandboxing · Secrets Mgmt · API Key Rotation · Agent Auth · Human Approval · Content Moderation · Data Poisoning · RAG ACL · MCP Server Trust · Audit Logging · Red Teaming</td>
-                <td><a href="#kp-4-3">4.3</a> · <a href="#kp-5-3">5.3</a><br><a href="#kp-7-1">模块 7 (7.1–7.4)</a></td>
-              </tr>
-              <tr>
-                <td><strong>7. Deployment</strong></td>
-                <td>Docker · Compose · Kubernetes · CI/CD · GitHub Actions · Eval Gates in CI · Env Configs · IaC · Serverless · GPU Instances · Ollama · Autoscaling · Load Balancing · Canary Releases · Feature Flags · Prompt Versioning · Model Versioning · Health Checks · Alerts &amp; Dashboards · Rollbacks</td>
-                <td><a href="#kp-10-1">模块 10 (10.1–10.2)</a></td>
-              </tr>
-              <tr>
-                <td><strong>8. Backend Eng</strong></td>
-                <td>REST APIs · HTTP Status Codes · Async/Await · SSE · WebSockets · JWT · OAuth 2.0 · SQL vs NoSQL · DB Indexing · Transactions &amp; ACID · Redis Caching · Message Queues · Background Jobs · Rate Limiting · Idempotency Keys · Retries with Backoff · S3 Uploads · Pagination · Pydantic · Logging &amp; Monitoring</td>
-                <td><a href="#kp-7-3">7.3</a> · <a href="#kp-10-3">10.3</a></td>
               </tr>
             </tbody>
           </table>
@@ -1010,7 +945,7 @@
         <div class="kp-question">面试原题：团队拿到一个业务需求，什么时候应该用固定 Workflow（工作流），什么时候才需要真正的自主 Agent？</div>
         <button class="kp-answer-toggle">👁 点击展开选型决策标准</button>
         <div class="kp-body">
-          <p>遵循业界（如 Anthropic《Building Effective Agents》）共识：<strong>复杂度能用简单确定性 Workflow 解决的，绝对不要上自主 Agent。</strong></p>
+          <p>遵循业界工程实践共识：<strong>复杂度能用简单确定性 Workflow 解决的，绝对不要上自主 Agent。</strong></p>
           <ul>
             <li><strong>选 Workflow 的场景</strong>：业务路径可枚举（例如“意图分类 → 固定模板抽取 → 调固定 API → 格式化输出”）；对延迟、成本、合规审计要求极高，不允许模型自由发挥步数。</li>
             <li><strong>选 Agent 的场景</strong>：解决路径无法预先穷举（如“排查线上报错并定位到具体 Commit”、“多轮动态追问并结合多个未知数据源分析”），需要模型根据中间 Observation 动态调整策略。</li>
@@ -1364,22 +1299,20 @@ async def execute_tool_safely(tool_call) -> str:
       </div>
 
       <!-- 4.2 -->
-      <div class="kp" id="kp-4-2" data-tags="sys hot">
+      <div class="kp" id="kp-4-2" data-tags="sys hot eng">
         <div class="kp-header">
-          <h3 class="kp-title">4.2 MCP (Model Context Protocol) 架构与 Tool-RAG 路由</h3>
-          <div class="kp-tags"><span class="badge sys">前沿标准</span><span class="badge hot">高频必考</span></div>
+          <h3 class="kp-title">4.2 MCP 与 Agent Skills：发现原理、协议架构与 Tool-RAG</h3>
+          <div class="kp-tags"><span class="badge sys">前沿标准</span><span class="badge hot">高频必考</span><span class="badge eng">Context 优化</span></div>
         </div>
-        <div class="kp-question">面试原题：MCP 协议解决了什么问题？如果企业接入了 200 个 MCP 工具，全塞进 Prompt 会撑爆上下文且降低准确率，怎么解决？</div>
-        <button class="kp-answer-toggle">👁 点击展开 MCP 架构与 Tool-RAG 方案</button>
+        <div class="kp-question">面试原题：Agent 是如何发现并加载 Skill（技能包）和 MCP（工具服务）的？如果企业接入 200 个 MCP 工具全塞进 Prompt 撑爆上下文怎么办？</div>
+        <button class="kp-answer-toggle">👁 点击展开发现原理、架构图与 Tool-RAG</button>
         <div class="kp-body">
+          <h4>一、 MCP 的发现原理与标准化拓扑</h4>
+          <p><strong>MCP（Model Context Protocol）</strong> 标准化了 <strong>Host（Agent 应用）↔ Client ↔ Server（外部数据源/工具）</strong> 的 JSON-RPC 2.0 通信（Stdio 本地 / Streamable HTTP 远程），将 <code>N×M</code> 定制胶水代码降维成 <code>N+M</code>，发现分三步：</p>
           <ul>
-            <li><strong>MCP 的核心价值</strong>：标准化 <strong>Host（Agent 应用）↔ Client ↔ Server（外部数据源/工具）</strong> 的 JSON-RPC 通信（Stdio 本地 / Streamable HTTP 远程），把原本 <code>N 个模型 × M 个工具</code> 的定制胶水代码降维成 <code>N + M</code>，并天然支持 OAuth2 鉴权与能力隔离。</li>
-            <li><strong>百级工具爆炸治理（Tool-RAG / 分层路由）</strong>：
-              <ol>
-                <li><strong>语义检索召回 Top-K 工具</strong>：将所有 Tool 的名称与描述向量化，根据用户意图先召回最相关的 5~10 个工具 Schema 挂载给模型（注意权衡 KV-Cache，可按域分组挂载而非单条高频变动）。</li>
-                <li><strong>Meta-Tool 懒加载</strong>：只给模型暴露一个 <code>search_tools(query)</code> 工具，需要时由模型主动搜索并挂载目标域工具。</li>
-              </ol>
-            </li>
+            <li><strong>Step 1（建连与 <code>initialize</code> 握手）</strong>：Client 连接 Server，交换协议版本与双方 Capabilities（Tools / Resources / Prompts）。</li>
+            <li><strong>Step 2（动态枚举 <code>tools/list</code>）</strong>：拉取所有工具的名称、描述与 JSON Schema，注册为 LLM 的 Function Calling <code>tools</code> 参数。</li>
+            <li><strong>Step 3（运行时热更新）</strong>：服务端变更工具时主动推送 <code>notifications/tools/list_changed</code>，Client 重新拉取即可完成热发现，无需重启 Agent。</li>
           </ul>
           <div class="diagram-box">
             <svg viewBox="0 0 740 165" width="740" height="165" xmlns="http://www.w3.org/2000/svg">
@@ -1411,6 +1344,49 @@ async def execute_tool_safely(tool_call) -> str:
               <line x1="430" y1="95" x2="490" y2="135" stroke="#57606a" stroke-width="1.3" marker-end="url(#arr4)"/>
             </svg>
             <div class="diagram-caption">图 4-1：MCP 标准化客户端-服务端拓扑</div>
+          </div>
+
+          <h4>二、 百级工具爆炸治理（Tool-RAG / Meta-Tool）</h4>
+          <ul>
+            <li><strong>语义检索召回 Top-K 工具</strong>：将 Tool 描述向量化，根据用户意图召回最相关的 5~10 个 Schema 挂载（按域分组挂载以保护 KV-Cache）。</li>
+            <li><strong>Meta-Tool 懒加载</strong>：仅暴露 <code>search_tools(query)</code>，需要时由模型主动搜索并挂载目标域工具。</li>
+          </ul>
+
+          <h4>三、 Agent Skills 的发现原理（渐进式披露 Progressive Disclosure）</h4>
+          <p><strong>Agent Skills</strong> 将垂直领域 SOP 规范与脚本打包为目录（以 <code>SKILL.md</code> 为入口），实现过程性知识的按需加载：</p>
+          <ul>
+            <li><strong>Level 1（启动索引）</strong>：扫描约定目录（如 <code>.skills/</code>），仅解析 <code>SKILL.md</code> 顶部 <strong>YAML Frontmatter（<code>name</code> + <code>description</code>）</strong> 注入 System Prompt（约 50 Token/个）。</li>
+            <li><strong>Level 2（触发读取）</strong>：意图命中某 Skill 后，Agent 调用 <code>read_file</code> 加载完整 <code>SKILL.md</code> 正文。</li>
+            <li><strong>Level 3（惰性执行）</strong>：仅在需要时读取附属 <code>references/</code> 或执行 <code>scripts/</code> 确定性脚本。</li>
+          </ul>
+
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>对比维度</th>
+                  <th>Agent Skills 发现机制</th>
+                  <th>MCP 发现机制</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><strong>发现载体</strong></td>
+                  <td>本地文件系统目录 + <code>SKILL.md</code> YAML Frontmatter</td>
+                  <td>JSON-RPC 2.0 <code>initialize</code> + <code>tools/list</code> 接口</td>
+                </tr>
+                <tr>
+                  <td><strong>加载时机</strong></td>
+                  <td>启动仅加载索引（~50 Token），触发后按需读正文</td>
+                  <td>建连后即拉取 Tool Schema（或经 Tool-RAG 按需挂载）</td>
+                </tr>
+                <tr>
+                  <td><strong>本质定位</strong></td>
+                  <td>教 Agent <strong>“怎么按规范做事”</strong>（过程性知识 SOP）</td>
+                  <td>给 Agent <strong>“能调用的外部手脚与数据源”</strong>（执行契约）</td>
+                </tr>
+              </tbody>
+            </table>
           </div>
         </div>
       </div>
@@ -1444,62 +1420,6 @@ async def execute_tool_safely(tool_call) -> str:
             <li><strong>Computer Use / Browser Agent</strong>：依赖视觉截图 + DOM/Accessibility Tree 双模态定位；视觉 Token 消耗极大且单步延迟高（1~3s/步）；核心痛点是<strong>UI 状态不可逆与非幂等</strong>（点错提交按钮无法撤回），必须在支付/删除按钮前做 DOM 语义拦截 + HITL。</li>
             <li><strong>Realtime Voice Agent</strong>：端到端延迟预算极其苛刻（&lt; 500ms），必须采用 WebRTC 流式音频 + <strong>VAD（语音活动检测）打断机制</strong>（Barge-in）；复杂工具调用不能阻塞语音流，需异步后台执行并用“缓冲话术”先行安抚用户。</li>
           </ul>
-        </div>
-      </div>
-
-      <!-- 4.5 -->
-      <div class="kp" id="kp-4-5" data-tags="sys eng hot">
-        <div class="kp-header">
-          <h3 class="kp-title">4.5 Agent 发现 Skill 和 MCP 的底层原理与渐进式加载</h3>
-          <div class="kp-tags"><span class="badge sys">底层原理</span><span class="badge hot">高频必考</span><span class="badge eng">Context 优化</span></div>
-        </div>
-        <div class="kp-question">面试原题：Agent 是如何发现并加载 Skill（技能包）和 MCP（工具服务）的？两者在底层发现机制、时机和上下文占用上有什么区别？</div>
-        <button class="kp-answer-toggle">👁 点击展开 Skill vs MCP 发现原理与对比</button>
-        <div class="kp-body">
-          <h4>一、 Skill 的发现原理（文件系统扫描 + 渐进式披露 Progressive Disclosure）</h4>
-          <p><strong>Agent Skills</strong> 是将特定领域的工作流 SOP、规范约束与配套脚本打包为目录（以 <code>SKILL.md</code> 为入口），核心在于<strong>“先索引、后按需加载”</strong>：</p>
-          <ul>
-            <li><strong>Step 1（启动扫描与 Frontmatter 解析）</strong>：Agent Host 启动时扫描约定目录（如 <code>.skills/</code>、<code>~/.agent/skills/</code>），仅解析每个 <code>SKILL.md</code> 顶部的 <strong>YAML Frontmatter（<code>name</code> + <code>description</code>）</strong>，以极低 Token（约 50 Token/个）注入 System Prompt 作为能力目录。</li>
-            <li><strong>Step 2（语义匹配与按需读取）</strong>：当用户意图命中某个 Skill 描述时，LLM 主动调用 <code>read_file</code> 读取该 <code>SKILL.md</code> 的完整指令正文。</li>
-            <li><strong>Step 3（附属资源惰性执行）</strong>：仅在步骤需要时读取 <code>references/</code> 参考文档或调用 <code>scripts/</code> 确定性脚本，既保留无限扩展能力，又完美保护 KV-Cache 前缀。</li>
-          </ul>
-
-          <h4>二、 MCP 的发现原理（JSON-RPC 运行时握手 + 能力协商 + 热推送）</h4>
-          <p><strong>MCP（Model Context Protocol）</strong> 是基于 JSON-RPC 2.0 的运行时连接协议，发现过程分为三个标准阶段：</p>
-          <ul>
-            <li><strong>Step 1（建连与 <code>initialize</code> 握手）</strong>：MCP Client 通过 Stdio（本地子进程）或 Streamable HTTP（远程服务）连接 MCP Server，发送 <code>initialize</code> 请求交换协议版本与双方 Capabilities（支持 Tools / Resources / Prompts）。</li>
-            <li><strong>Step 2（动态枚举 <code>tools/list</code>）</strong>：握手完成后，Client 调用 <code>tools/list</code>（以及 <code>resources/list</code>、<code>prompts/list</code>）拉取所有工具的名称、描述与 <strong>JSON Schema 参数定义</strong>，注册为 LLM 的 Function Calling <code>tools</code> 参数（工具过多时配合 4.2 的 Tool-RAG 过滤）。</li>
-            <li><strong>Step 3（运行时热更新）</strong>：当外部服务端新增或下线工具时，Server 主动推送 <code>notifications/tools/list_changed</code> 通知，Client 重新拉取列表即可完成热发现，无需重启 Agent。</li>
-          </ul>
-
-          <div class="table-wrap">
-            <table>
-              <thead>
-                <tr>
-                  <th>对比维度</th>
-                  <th>Agent Skills 发现机制</th>
-                  <th>MCP 发现机制</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td><strong>发现载体</strong></td>
-                  <td>本地文件系统目录 + <code>SKILL.md</code> YAML Frontmatter</td>
-                  <td>JSON-RPC 2.0 <code>initialize</code> + <code>tools/list</code> 接口</td>
-                </tr>
-                <tr>
-                  <td><strong>加载时机</strong></td>
-                  <td>启动仅加载索引（~50 Token），触发后按需读正文</td>
-                  <td>建连后即拉取 Tool Schema（或经 Tool-RAG 按需挂载）</td>
-                </tr>
-                <tr>
-                  <td><strong>本质定位</strong></td>
-                  <td>教 Agent <strong>“怎么按规范做事”</strong>（过程性知识 SOP）</td>
-                  <td>给 Agent <strong>“能调用的外部手脚与数据源”</strong>（执行契约）</td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
         </div>
       </div>
     </section>
@@ -1647,7 +1567,7 @@ async def execute_tool_safely(tool_call) -> str:
           <h4>一、 进阶检索增强技术</h4>
           <ul>
             <li><strong>HyDE（Hypothetical Document Embeddings）</strong>：用户提问往往很短（“报销超标怎么办”），与长篇制度文档在向量空间存在“问-答不对称”。HyDE 先让小模型生成一段“假设性标准答案”，再用这段假设答案去向量库检索真实文档，显著提升语义对齐度（代价是增加一次前置推理延迟）。</li>
-            <li><strong>Contextual Retrieval（上下文增强检索，Anthropic 提出）</strong>：传统切片丢失了文档全局语境（如切片只写“同比增长 12%”，却不知是哪家公司哪一年）。入库前用廉价模型为每个 Chunk 生成 50 字全局语境前缀（如 <code>[本文档为2025年Q3财报，说明华东区营收]</code>），再分别构建 Dense Embedding 与 BM25 索引，配合 Prompt Caching 建库成本极低，可将检索失败率降低 49%~67%。</li>
+            <li><strong>Contextual Retrieval（上下文增强检索）</strong>：传统切片丢失了文档全局语境（如切片只写“同比增长 12%”，却不知是哪家公司哪一年）。入库前用廉价模型为每个 Chunk 生成 50 字全局语境前缀（如 <code>[本文档为2025年Q3财报，说明华东区营收]</code>），再分别构建 Dense Embedding 与 BM25 索引，配合 Prompt Caching 建库成本极低，可将检索失败率降低 49%~67%。</li>
             <li><strong>Citations（强制引用溯源）</strong>：给每个召回 Chunk 分配唯一短 ID（如 <code>[doc_3]</code>），要求生成内容必须附带引用标记，前端可点击高亮原文，从交互上兜底幻觉。</li>
           </ul>
           <h4>二、 检索器离线量化指标（Retrieval Metrics）</h4>
@@ -1757,7 +1677,7 @@ async def execute_tool_safely(tool_call) -> str:
           <h3 class="kp-title">6.4 A2A (Agent-to-Agent) 协议、MCP 互补与 OpenAI Agents SDK</h3>
           <div class="kp-tags"><span class="badge sys">前沿协议</span><span class="badge hot">高频必考</span></div>
         </div>
-        <div class="kp-question">面试原题：既然已经有了 MCP 协议，为什么还需要 Google 提出的 A2A (Agent-to-Agent) 协议？OpenAI Agents SDK 的轻量协同范式又有什么特点？</div>
+        <div class="kp-question">面试原题：既然已经有了 MCP 协议，为什么还需要 A2A (Agent-to-Agent) 协议？OpenAI Agents SDK 的轻量协同范式又有什么特点？</div>
         <button class="kp-answer-toggle">👁 点击展开 MCP vs A2A 架构图与解析</button>
         <div class="kp-body">
           <ul>
@@ -1922,73 +1842,25 @@ public class OrderToolService {
       </div>
 
       <!-- 8.2 -->
-      <div class="kp" id="kp-8-2" data-tags="sys hot">
+      <div class="kp" id="kp-8-2" data-tags="sys hot eng">
         <div class="kp-header">
-          <h3 class="kp-title">8.2 非确定性系统 CI/CD 评测：LLM-as-a-Judge 与状态断言</h3>
-          <div class="kp-tags"><span class="badge sys">Eval 体系</span><span class="badge hot">高频必考</span></div>
+          <h3 class="kp-title">8.2 自动化评测与四层语义测试实战 (State Eval + Semantic Testing)</h3>
+          <div class="kp-tags"><span class="badge sys">Eval 体系</span><span class="badge hot">高频必考</span><span class="badge eng">CI 门禁</span></div>
         </div>
-        <div class="kp-question">面试原题：Agent 每次输出文案都不完全一样，传统的单元测试（assertEqual）失效了。你们怎么在修改 Prompt 或升级模型前做自动化回归评测？</div>
-        <button class="kp-answer-toggle">👁 点击展开三层评测体系</button>
+        <div class="kp-question">面试原题：Agent 每次输出文案都不完全一样，传统的单元测试（assertEqual）失效了。在修改 Prompt 或升级模型前，如何做自动化回归评测与“语义测试”？</div>
+        <button class="kp-answer-toggle">👁 点击展开评测体系、四层语义测试与代码示例</button>
         <div class="kp-body">
-          <ol>
+          <h4>一、 行为与结果评测（先查结果，再查轨迹）</h4>
+          <ul>
             <li><strong>确定性状态断言（State / Outcome Assertion）——最硬核</strong>：不关心中间说了什么漂亮话，只检查沙箱/测试数据库<strong>最终状态</strong>是否达成（例如：退款后订单表状态是否变成 <code>REFUNDED</code>？生成的 Patch 能否跑通单元测试？）。</li>
             <li><strong>轨迹断言（Trajectory Eval）</strong>：检查关键工具是否被调用、参数是否合法、是否触发了不必要的冗余步数。</li>
-            <li><strong>LLM-as-a-Judge（针对开放式回答）</strong>：建立 100~300 条线上 Bad Case 组成的 <strong>Golden Dataset</strong>，用强模型按 Rubric（忠实度、相关性、合规性）打分；同时通过<strong>正反序交换（Pairwise Swapping）</strong>消除 Judge 的位置偏见与长度偏见，并用人工抽检校准 Judge 一致率。</li>
-          </ol>
-        </div>
-      </div>
-
-      <!-- 8.3 -->
-      <div class="kp" id="kp-8-3" data-tags="eng hot">
-        <div class="kp-header">
-          <h3 class="kp-title">8.3 线上延迟 (TTFT / E2E) 与成本优化组合拳</h3>
-          <div class="kp-tags"><span class="badge eng">性能优化</span><span class="badge hot">高频必考</span></div>
-        </div>
-        <div class="kp-question">面试原题：如果老板要求把当前 Agent 的平均响应耗时砍半、Token 成本降低 60%，但准确率不能掉，你有哪些具体抓手？</div>
-        <button class="kp-answer-toggle">👁 点击展开降本提速组合拳</button>
-        <div class="kp-body">
-          <ul>
-            <li><strong>大小模型分级路由（Model Routing）</strong>：意图分类、参数提取、记忆摘要全用轻量小模型（如 Haiku / Flash / 7B 微调模型），只在核心复杂规划节点调用旗舰大模型。</li>
-            <li><strong>工具并行与提前终止</strong>：开启 Parallel Tool Calling，多个独立查询（查订单 + 查物流 + 查政策）一次并发完成，减少串行 RTT。</li>
-            <li><strong>KV-Cache + 语义缓存（Semantic Cache）</strong>：严格固定 Prompt 前缀吃满 50%~75% 缓存折扣；高频相似问题直接命中 Redis 语义缓存（0 LLM 调用）。</li>
-            <li><strong>确定性前移</strong>：把本可以由正则/规则引擎完成的意图路由和格式校验从 LLM 剥离出来，彻底省掉多余的推理轮次。</li>
           </ul>
-        </div>
-      </div>
-
-      <!-- 8.4 -->
-      <div class="kp" id="kp-8-4" data-tags="eng hot">
-        <div class="kp-header">
-          <h3 class="kp-title">8.4 RAG 三元组评测与合成数据反馈飞轮</h3>
-          <div class="kp-tags"><span class="badge eng">Eval 指标</span><span class="badge hot">高频必考</span></div>
-        </div>
-        <div class="kp-question">面试原题：用 Ragas / TruLens 做 RAG 评测时，“RAG 三元组（Faithfulness / Answer Relevance / Context Precision）”分别测什么？冷启动缺少标注数据时怎么办？</div>
-        <button class="kp-answer-toggle">👁 点击展开三元组指标与数据飞轮</button>
-        <div class="kp-body">
-          <ul>
-            <li><strong>Faithfulness（忠实度）</strong>：生成的答案是否完全由召回的 Context 支撑？（测<strong>幻觉</strong>：答案里有没有瞎编上下文里不存在的事实）。</li>
-            <li><strong>Answer Relevance（答案相关性）</strong>：最终回答是否直接、完整地回答了用户的原始提问？（防止答非所问）。</li>
-            <li><strong>Context Precision / Recall（上下文精确度/召回率）</strong>：检索排在前面的 Chunk 是否真的有用，有没有把关键依据漏掉？（测<strong>检索器</strong>）。</li>
-            <li><strong>合成测试数据与反馈飞轮（Synthetic Data &amp; Feedback Loop）</strong>：冷启动期从真实文档反向生成 Q-A-Context 三元组（Synthetic Test Data）并加入对抗性干扰样本；上线后收集用户点踩（👍/👎）与人工标注（Human Labeling）做 Error Analysis，持续反哺 Golden Dataset 迭代。</li>
-          </ul>
-        </div>
-      </div>
-
-      <!-- 8.5 -->
-      <div class="kp" id="kp-8-5" data-tags="eng hot">
-        <div class="kp-header">
-          <h3 class="kp-title">8.5 对 Agent 返回结果如何做语义测试 (Semantic Testing)</h3>
-          <div class="kp-tags"><span class="badge eng">Eval 实战</span><span class="badge hot">高频必考</span></div>
-        </div>
-        <div class="kp-question">面试原题：Agent 每次返回的自然语言措辞都不一样，不能用 `assert resp == expected`，那在自动化测试中具体怎么对 Agent 的返回做“语义测试”？</div>
-        <button class="kp-answer-toggle">👁 点击展开四层语义测试金字塔与代码示例</button>
-        <div class="kp-body">
-          <h4>四层语义测试金字塔（成本由低到高、确定性由高到低）</h4>
+          <h4>二、 针对自然语言返回的四层语义测试金字塔（成本由低到高）</h4>
           <ol>
-            <li><strong>L1 确定性语义锚点（零成本/毫秒级）</strong>：先用结构化断言兜底——校验 JSON Schema、必含实体/数字（如退款金额 <code>$50.00</code>、订单号）以及绝对禁词（如不能出现竞品名或内部堆栈）。</li>
-            <li><strong>L2 向量余弦相似度 / BERTScore（低成本）</strong>：将 Agent 输出与标准参考答案（Golden Answer）做 Embedding 编码，计算 Cosine Similarity（通常阈值 ≥ 0.82）；适合简短事实型问答回归，但<strong>无法识别“语义相反但用词相似”</strong>（如“支持退款” vs “不支持退款”）。</li>
-            <li><strong>L3 NLI（自然语言推理）蕴含与矛盾检测</strong>：使用轻量级 Cross-Encoder NLI 模型（如 DeBERTa-NLI）判断输出与参考事实之间是 <code>Entailment（蕴含）</code> 还是 <code>Contradiction（矛盾）</code>，专门用来低成本捕捉逻辑反转与幻觉。</li>
-            <li><strong>L4 LLM-as-a-Judge 语义断言（高准确度）</strong>：用强模型按明确 Rubric（或 DeepEval / Promptfoo 语义断言）评估“是否完整传达了核心意图且无幻觉”，并配合 Pairwise 对照与多轮采样通过率（如 Pass@3）消除单次波动。</li>
+            <li><strong>L1 确定性语义锚点（零成本/毫秒级）</strong>：校验 JSON Schema、必含实体/数字（如金额、订单号）以及绝对禁词（如竞品名、内部堆栈）。</li>
+            <li><strong>L2 向量余弦相似度 / BERTScore（低成本）</strong>：计算输出与 Golden Answer 的 Embedding 余弦相似度（阈值 ≥ 0.80），适合简短事实回归，但<strong>无法识别“语义相反但用词相似”</strong>（如“支持退款” vs “不支持退款”）。</li>
+            <li><strong>L3 NLI（自然语言推理）蕴含与矛盾检测</strong>：用轻量 Cross-Encoder NLI 模型判断输出与参考事实是 <code>Entailment（蕴含）</code> 还是 <code>Contradiction（矛盾）</code>，低成本捕捉逻辑反转与幻觉。</li>
+            <li><strong>L4 LLM-as-a-Judge 语义终审（高准确度）</strong>：基于 100~300 条线上 Bad Case 组成的 <strong>Golden Dataset</strong>，用强模型按 Rubric 打分；通过<strong>正反序交换（Pairwise Swapping）</strong>消除位置与长度偏见，并用人工抽检校准一致率。</li>
           </ol>
           <div class="code-label">Python · pytest 分层语义测试示例</div>
 <pre><code>import numpy as np
@@ -2013,6 +1885,42 @@ async def test_refund_agent_semantic_response():
         criteria="回答必须明确告知支持退货、不承诺超出政策外的赔付，且语气礼貌。"
     )
     assert judge.passed, judge.reason</code></pre>
+        </div>
+      </div>
+
+      <!-- 8.3 -->
+      <div class="kp" id="kp-8-3" data-tags="eng hot">
+        <div class="kp-header">
+          <h3 class="kp-title">8.3 线上延迟 (TTFT / E2E) 与成本优化组合拳</h3>
+          <div class="kp-tags"><span class="badge eng">性能优化</span><span class="badge hot">高频必考</span></div>
+        </div>
+        <div class="kp-question">面试原题：如果老板要求把当前 Agent 的平均响应耗时砍半、Token 成本降低 60%，但准确率不能掉，你有哪些具体抓手？</div>
+        <button class="kp-answer-toggle">👁 点击展开降本提速组合拳</button>
+        <div class="kp-body">
+          <ul>
+            <li><strong>大小模型分级路由（Model Routing）</strong>：意图分类、参数提取、记忆摘要全用轻量小模型（如 Haiku / Flash / 7B 微调模型），只在核心复杂规划节点调用旗舰大模型。</li>
+            <li><strong>工具并行与提前终止</strong>：开启 Parallel Tool Calling，多个独立查询（查订单 + 查物流 + 查政策）一次并发完成，减少串行 RTT。</li>
+            <li><strong>双层缓存（Prefix Caching + Redis Semantic Cache）</strong>：吃满平台前缀缓存折扣的同时，对高频相似提问直接命中 Redis 语义缓存（0 LLM 调用）。</li>
+            <li><strong>确定性前移</strong>：把本可以由正则/规则引擎完成的意图路由和格式校验从 LLM 剥离出来，彻底省掉多余的推理轮次。</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- 8.4 -->
+      <div class="kp" id="kp-8-4" data-tags="eng hot">
+        <div class="kp-header">
+          <h3 class="kp-title">8.4 RAG 三元组评测与合成数据反馈飞轮</h3>
+          <div class="kp-tags"><span class="badge eng">Eval 指标</span><span class="badge hot">高频必考</span></div>
+        </div>
+        <div class="kp-question">面试原题：用 Ragas / TruLens 做 RAG 评测时，“RAG 三元组（Faithfulness / Answer Relevance / Context Precision）”分别测什么？冷启动缺少标注数据时怎么办？</div>
+        <button class="kp-answer-toggle">👁 点击展开三元组指标与数据飞轮</button>
+        <div class="kp-body">
+          <ul>
+            <li><strong>Faithfulness（忠实度）</strong>：生成的答案是否完全由召回的 Context 支撑？（测<strong>幻觉</strong>：答案里有没有瞎编上下文里不存在的事实）。</li>
+            <li><strong>Answer Relevance（答案相关性）</strong>：最终回答是否直接、完整地回答了用户的原始提问？（防止答非所问）。</li>
+            <li><strong>Context Precision / Recall（上下文精确度/召回率）</strong>：检索排在前面的 Chunk 是否真的有用，有没有把关键依据漏掉？（测<strong>检索器</strong>）。</li>
+            <li><strong>合成测试数据与反馈飞轮（Synthetic Data &amp; Feedback Loop）</strong>：冷启动期从真实文档反向生成 Q-A-Context 三元组（Synthetic Test Data）并加入对抗性干扰样本；上线后收集用户点踩（👍/👎）与人工标注（Human Labeling）做 Error Analysis，持续反哺 Golden Dataset 迭代。</li>
+          </ul>
         </div>
       </div>
     </section>
@@ -2088,7 +1996,7 @@ async def test_refund_agent_semantic_response():
         <button class="kp-answer-toggle">👁 点击展开 LLMOps 发布流</button>
         <div class="kp-body">
           <ul>
-            <li><strong>GitHub Actions + Eval Gates in CI</strong>：每次 PR 修改代码、Tool Schema 或 Prompt 文件时，CI 自动触发 Golden Dataset 回归测试；若 <code>Faithfulness &lt; 0.90</code> 或 <code>Tool Call Accuracy</code> 下降超过 2%，直接阻断合并。</li>
+            <li><strong>GitHub Actions + CI Eval Gates</strong>：PR 变更代码、Tool Schema 或 Prompt 时自动触发回归门禁，关键指标（如忠实度、工具调用准确率）未达阈值直接阻断合并。</li>
             <li><strong>Prompt / Model Versioning + Feature Flags</strong>：模型端点、Prompt 版本号通过配置中心/Feature Flags 动态下发，支持按租户或 5% 流量做 <strong>Canary Release（金丝雀灰度）</strong>。</li>
             <li><strong>Health Checks &amp; Rollbacks</strong>：监控看板（Alerts &amp; Dashboards）紧盯 P95 延迟、429 错误率、护栏拦截率与单次请求成本；一旦异常，通过切换 Feature Flag 秒级回滚到上一个稳定 Prompt/模型版本，无需重新打包容器镜像。</li>
           </ul>
