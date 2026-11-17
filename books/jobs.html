@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>招聘信息 · 莘庄40分钟通勤圈 100家在招公司</title>
+<style>
+  :root {
+    --bg: #f6f8fa;
+    --bg-card: #ffffff;
+    --text: #1f2328;
+    --text-secondary: #57606a;
+    --accent: #0969da;
+    --accent-soft: #ddf4ff;
+    --border: #d8dee4;
+    --ok-bg: #dafbe1;
+    --ok-text: #116329;
+    --warn-bg: #fff8c5;
+    --warn-text: #7d4e00;
+    --high-bg: #ffebe9;
+    --high-text: #cf222e;
+    --sans: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Microsoft YaHei", Helvetica, Arial, sans-serif;
+  }
+  [data-theme="dark"] {
+    --bg: #0d1117;
+    --bg-card: #161b22;
+    --text: #e6edf3;
+    --text-secondary: #8b949e;
+    --accent: #58a6ff;
+    --accent-soft: rgba(56, 139, 253, 0.15);
+    --border: #30363d;
+    --ok-bg: rgba(46, 160, 67, 0.18);
+    --ok-text: #3fb950;
+    --warn-bg: rgba(187, 128, 9, 0.18);
+    --warn-text: #d29922;
+    --high-bg: rgba(248, 81, 73, 0.18);
+    --high-text: #f85149;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    font-family: var(--sans);
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.6;
+    font-size: 14px;
+  }
+  .container {
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 24px 20px 48px;
+  }
+  .topbar {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 18px;
+  }
+  .back {
+    color: var(--accent);
+    text-decoration: none;
+    font-weight: 600;
+  }
+  .back:hover { text-decoration: underline; }
+  .theme-btn {
+    background: var(--bg-card);
+    color: var(--text);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 6px 12px;
+    cursor: pointer;
+    font-size: 13px;
+  }
+  h1 {
+    margin: 0 0 8px;
+    font-size: 24px;
+  }
+  .subtitle {
+    color: var(--text-secondary);
+    margin: 0 0 20px;
+    font-size: 14px;
+  }
+  .filters {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 14px 16px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    align-items: center;
+    margin-bottom: 16px;
+  }
+  .filters input, .filters select {
+    background: var(--bg);
+    color: var(--text);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 7px 10px;
+    font-size: 13px;
+  }
+  .filters input { flex: 1 1 240px; }
+  .stats {
+    margin-left: auto;
+    color: var(--text-secondary);
+    font-size: 13px;
+    font-weight: 600;
+  }
+  .table-wrap {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    overflow-x: auto;
+  }
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    min-width: 960px;
+  }
+  th, td {
+    padding: 10px 12px;
+    border-bottom: 1px solid var(--border);
+    text-align: left;
+    vertical-align: top;
+  }
+  th {
+    background: var(--bg);
+    font-weight: 600;
+    font-size: 13px;
+    position: sticky;
+    top: 0;
+  }
+  tr:hover td { background: var(--accent-soft); }
+  .badge {
+    display: inline-block;
+    padding: 2px 8px;
+    border-radius: 12px;
+    font-size: 12px;
+    font-weight: 500;
+    white-space: nowrap;
+  }
+  .b-low { background: var(--ok-bg); color: var(--ok-text); }
+  .b-mid { background: var(--warn-bg); color: var(--warn-text); }
+  .b-high { background: var(--high-bg); color: var(--high-text); }
+  a.src {
+    color: var(--accent);
+    text-decoration: none;
+    word-break: break-all;
+  }
+  a.src:hover { text-decoration: underline; }
+</style>
+</head>
+<body>
+<div class="container">
+  <div class="topbar">
+    <a class="back" href="../index.html">← 返回面试复习笔记首页</a>
+    <button class="theme-btn" id="themeBtn">🌓 切换深浅模式</button>
+  </div>
+  <h1>💼 招聘信息 · 莘庄地铁站 40 分钟通勤圈（100 家在招公司）</h1>
+  <p class="subtitle">筛选条件：以 1/5 号线「莘庄站」为起点公交/地铁 ≤40 分钟可达（部分含混合/远程）；在招 Java / MLOps / AI Agent / Full Stack 岗位；含行业、工作强度、所属国家与招聘来源网址。</p>
+
+  <div class="filters">
+    <input type="text" id="q" placeholder="搜索公司、岗位方向、行业、地址或国家...">
+    <select id="intensity">
+      <option value="">全部工作强度</option>
+      <option value="低">强度较低 / 中低（WLB 较好）</option>
+      <option value="中">强度中等</option>
+      <option value="偏高">强度偏高</option>
+    </select>
+    <select id="country">
+      <option value="">全部所属国家</option>
+      <option value="中国">中国企业</option>
+      <option value="美国">美国企业</option>
+      <option value="欧洲">欧洲（德/法/英/荷/比/瑞）</option>
+      <option value="亚太">亚太其他（新加坡/澳等）</option>
+    </select>
+    <span class="stats" id="stats">共 100 家</span>
+  </div>
+
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th style="width:44px">#</th>
+          <th style="width:165px">公司名称</th>
+          <th style="width:90px">所属国家</th>
+          <th style="width:135px">行业</th>
+          <th style="width:130px">工作强度</th>
+          <th style="width:240px">办公地址与距莘庄通勤</th>
+          <th style="width:190px">在招相关岗位</th>
+          <th>招聘信息来源网址</th>
+        </tr>
+      </thead>
+      <tbody id="tbody"></tbody>
+    </table>
+  </div>
+</div>
+
+<script>
+const JOBS = [
+  [1,"Syensqo（世索科）","比利时","特种化工与材料","较低（欧企 WLB 好）","闵行区莘庄工业区金都路3966号（~15-20分钟）","Senior AI Engineer (MLOps / Agentic AI)","https://www.linkedin.com/jobs/view/4475073547/"],
+  [2,"Shopee（虾皮）","新加坡","跨境电商与互联网","中等偏上","闵行区田林路889号科技绿洲四期（~25分钟）","高级后端开发（Java/Go）/ AI Agent","https://careers.shopee.cn/"],
+  [3,"Siemens Energy（西门子能源）","德国","能源与工业科技","中低（欧企 955）","闵行区天宁路299号（5号线文井路 ~28分钟）","SHVS AI Agent & Backend Engineer","https://www.linkedin.com/jobs/view/4377696293/"],
+  [4,"Microsoft（微软）","美国","云计算与软件","中低（Hybrid WLB 好）","闵行区紫星路999号紫竹高新区（~30-35分钟）","Senior Software Engineer - Core AI (Java)","https://www.linkedin.com/jobs/view/4487280780/"],
+  [5,"Intel（英特尔）","美国","半导体与 AI 软件","较低（外企 955）","闵行区紫竹高新区紫日路751号/紫星路880号（~30-35分钟）","AI Software / MLOps / 推理优化","https://jobs.intel.com/"],
+  [6,"卓驭（原大疆车载）","中国","智能驾驶与 AI","中等偏上","闵行区虹桥商务区万通中心（~30-35分钟）","大模型训练优化算法工程师","https://maimai.cn/n/job/geo/07VIdkmzMQ1bXOeRE1OQQQ"],
+  [7,"酷睿程 (CARIZON)","中德合资","智能驾驶软件","中低（德系合资较稳）","闵行区申长路990弄虹桥汇（~35分钟）","智驾系统集成开发（CI/CD AI化）","https://maimai.cn/n/job/geo/3Q5UfNgy8osOmL57qZ2ejA"],
+  [8,"壁仞科技","中国","AI 芯片与算力软件","中等","闵行区陈行公路2388号浦江高科技园（~35-38分钟）","AI 系统软件 / 平台研发","https://www.birentech.com/"],
+  [9,"思特威 (SmartSens)","中国","芯片与智能视觉","中等","闵行区田林路889号科技绿洲四期8号楼（~25分钟）","AI 视觉算法 / 底层软件","https://www.smartsenstech.com/"],
+  [10,"途虎养车","中国","汽车后市场互联网","中等","闵行区闵虹路166弄城开中心（1号线莲花路 ~8分钟）","Java 后端 / AI 应用研发","https://www.tuhu.cn/"],
+  [11,"哈啰 (Hello Inc.)","中国","出行与本地生活","中等","闵行区园秀路28弄旭辉莘庄中心（~10分钟）","Java 后端 / 算法工程","https://www.hello-inc.com/"],
+  [12,"氪信科技 (CraiditX)","中国","金融风控 AI","中等","闵行区宜山路2000号利丰广场（~22分钟）","Java / MLOps / AI 风控","https://www.craiditx.com/"],
+  [13,"泛微网络 (Weaver)","中国","协同办公软件","中低（老牌软件公司）","闵行区三鲁公路3419号（8号线联航路 ~35分钟）","Java 后端 / 智能办公 AI","https://www.weaver.com.cn/"],
+  [14,"万达信息 (Wondersgroup)","中国","智慧城市与医疗 IT","中低（国企背景较稳）","闵行区联航路1518号 / 徐汇桂平路（~25-35分钟）","Java 开发 / AI 工程师","https://www.wondersgroup.com/"],
+  [15,"可口可乐 (Coca-Cola)","美国","快消品数字化","较低（外企 955）","闵行区紫竹科学园区紫月路1188号（~30分钟）","企业 IT / 数字化软件","https://www.coca-colacompany.com/careers"],
+  [16,"上海趣拉科技","中国","金融科技","中等","徐汇区沪闵路9335号徐汇万科中心二期（1号线南站 ~10分钟）","AI 数据资产管理 / AI 自动化","https://maimai.cn/n/job/geo/3AQhXDdAiqghlSaB0MaXJQ"],
+  [17,"澜起科技","中国","云计算与 AI 互连芯片","中低（上市芯片公司）","徐汇区漕宝路181号和光天地（1号线漕宝路 ~12分钟）","系统架构 / AI 基础设施软件","https://www.montage-tech.com/"],
+  [18,"鸣鸣很忙","中国","零售消费数字化","中等（965 左右）","徐汇区徐家汇中心三期A座（1号线徐家汇 ~18分钟）","Java 后端研发专家","https://maimai.cn/n/job/geo/x34GgJ18oFChPlQsGg8D5w"],
+  [19,"惠每移健","中国","医疗 AI","中等","徐汇区中山南二路107号美奂大厦（~20分钟）","AI Agent 工程师","https://www.linkedin.com/jobs/view/4487873455/"],
+  [20,"MoSeeker（仟寻）","中国","招聘科技 SaaS","中等","徐汇区番禺路1028号数娱大厦（1号线徐家汇 ~22分钟）","Java 开发工程师","https://www.linkedin.com/jobs/view/4489354830/"],
+  [21,"东方财富","中国","金融互联网","中等（965 左右）","徐汇区宛平南路88号东方财富大厦（~22分钟）","Java 服务端 / AI 应用后端","https://zhaopin.eastmoney.com/"],
+  [22,"上海模思智能科技","中国","AI 推理平台","中等偏上","徐汇区华发路699弄漕河泾北杨孵化器（~22分钟）","资深平台研发（推理平台）","https://maimai.cn/n/job/geo/7SdD-KJeGpr42QRWgkKAUg"],
+  [23,"3M 中国","美国","工业与材料科技","较低（美企 955）","徐汇区田林路222号 / 长宁万都中心（~22-30分钟）","企业级软件 / 工业物联网 AI","https://www.3m.com.cn/"],
+  [24,"GEESPACE（时空道宇）","中国","商业航天与物联网","中等（965 左右）","徐汇区虹梅路1535号星联科技园（漕河泾 ~25分钟）","Java 高级工程师","https://www.linkedin.com/jobs/view/4480075020/"],
+  [25,"Patsnap（智慧芽）","新加坡/中国","知识产权与研发 SaaS","中等偏上","徐汇区桂平路391号新漕河泾A座（~25分钟）","Lead Engineer, AI Agent Systems","https://www.linkedin.com/jobs/view/4460042242/"],
+  [26,"锐捷网络","中国","ICT 网络与企业 IT","中等（上市公司较稳）","徐汇区虹梅路2071号（漕河泾 ~25分钟）","数据 AI 架构师","https://maimai.cn/n/job/geo/LluKXNW36klkykrj4GzFGA"],
+  [27,"商汤科技 (SenseTime)","中国","人工智能与大模型","中等","徐汇区虹梅路1900号商汤科技大厦（~25分钟）","AI Agent / MLOps / Java 后端","https://hr.sensetime.com/"],
+  [28,"星环科技 (Transwarp)","中国","大数据与 AI 基础软件","中等","徐汇区虹漕路88号（漕河泾 ~25分钟）","Java 分布式 / MLOps / AI Agent","https://app.mokahr.com/campus_apply/transwarp"],
+  [29,"汇付天下 (Huifu)","中国","金融支付科技","中等（965 左右）","徐汇区宜山路700号普天信息产业园（~25分钟）","Java 后端 / AI Agent 平台","https://huifu.zhiye.com/"],
+  [30,"FunPlus（趣加游戏）","中国/瑞士","全球化游戏","中等（游戏厂中偏稳）","徐汇区苍梧路（漕河泾 ~25分钟）","Java 资深后端 / AI 应用研发","https://www.funplus.com/careers/"],
+  [31,"莉莉丝 (Lilith Games)","中国","全球化游戏","中等（相对弹性）","徐汇区漕河泾华鑫慧享城（~25分钟）","Java 服务端 / AI 工程化","https://lilith.com/"],
+  [32,"米哈游 (miHoYo)","中国","游戏与 AIGC","中等偏高","徐汇区宜山路1295号（漕河泾 ~25分钟）","Java 后端 / AI 工程化落地","https://jobs.mihoyo.com/"],
+  [33,"Cargill（嘉吉）","美国","跨国农业与大宗商品","较低（传统外企 955）","徐汇区桂箐路65号新研大厦B座 / 环贸（~25分钟）","Senior Software Engineering (AI Agents)","https://www.linkedin.com/jobs/view/4479434531/"],
+  [34,"MiniMax（稀宇极智）","中国","通用大模型独角兽","偏高（创业冲刺）","徐汇区桂箐路65号新研大厦B座（~25分钟）","AI Agent / MLOps / 云原生架构","https://www.minimaxi.com/"],
+  [35,"TE Connectivity（泰科电子）","瑞士/美国","电子连接器与工业","较低（外企 955）","徐汇区古美路1528号5幢（漕河泾 ~25分钟）","Industrial AI Engineer","https://www.linkedin.com/jobs/view/4482978571/"],
+  [36,"Avery Dennison（艾利丹尼森）","美国","材料科学与标签","较低（外企 955）","徐汇区虹梅路1801号新业园（~25分钟）","Data / Software Engineer","https://www.linkedin.com/jobs/view/4487937010/"],
+  [37,"第四范式 (4Paradigm)","中国","企业级 AI 与决策平台","中等","徐汇区桂平路391号新漕河泾A座38层（~25分钟）","AI 平台 / MLOps / Agent","https://www.4paradigm.com/"],
+  [38,"斑马智行","中国","智能汽车操作系统","中等","徐汇区桂平路391号新漕河泾B座17层（~25分钟）","Java 后端 / 车载 AI","https://www.ebanma.com/"],
+  [39,"思科 (Cisco)","美国","网络与云基础设施","较低（美企 WLB 标杆）","徐汇区宜山路926号（漕河泾 ~25分钟）","Software / Cloud / AI Engineer","https://jobs.cisco.com/"],
+  [40,"甲骨文 (Oracle)","美国","数据库与云计算","较低（美企 955）","徐汇区淮海中路1045号淮海国际广场（~25分钟）","Java / Cloud Software Engineer","https://www.oracle.com/cn/corporate/careers/"],
+  [41,"竹间智能 (Emotibot)","中国","对话式 AI 与 Agent","中等","徐汇区虹漕路25-1号（漕河泾 ~25分钟）","NLP / AI Agent 工程","https://www.emotibot.com/"],
+  [42,"法雷奥 (Valeo)","法国","汽车电子与智驾","较低（法企 955）","徐汇区桂平路391号新漕河泾（~25分钟）","智驾软件 / 系统工程","https://www.valeo.com/en/join-us/"],
+  [43,"强生 (Johnson & Johnson)","美国","医疗器械与制药","较低（美企 955）","徐汇区桂箐路65号新研大厦A座（~25分钟）","Software Engineer (Java/Python) / AI","https://www.careers.jnj.com/"],
+  [44,"默沙东 (MSD)","美国","跨国制药与数字医疗","较低（美企 955）","徐汇区徐家汇中心 / 古美路1582号（~22-25分钟）","IT / 数字化 / AI 数据分析","https://jobs.msd.com/"],
+  [45,"阿迪达斯中国数字化中心","德国","运动零售数字化","较低（德企 955）","徐汇区小木桥路 / 徐家汇（~22分钟）","Java / Full Stack / AI 应用","https://careers.adidas-group.com/"],
+  [46,"腾讯 (Tencent)","中国","互联网与云计算","中等偏上（视 BG）","徐汇区漕河泾腾讯大厦 / 徐汇滨江（~25-28分钟）","Java 后端 / AI 大模型工程","https://careers.tencent.com/"],
+  [47,"Arm（安谋科技）","英国","芯片 IP 与 AI 软件","中低（外企较规律）","徐汇区龙耀路175号星扬西岸中心（~28分钟）","AI Software Engineer","https://www.linkedin.com/jobs/view/4469080303/"],
+  [48,"牧原股份","中国","现代农牧数字化","中等（965 左右）","徐汇区龙爱路27号芒果广场（~28分钟）","Java 后端开发工程师","https://www.linkedin.com/jobs/view/4489707543/"],
+  [49,"此间无限（上海）智能科技","中国","AI 智能体","中等偏上","徐汇区龙文路69号国际传媒港M2栋（~28分钟）","后端开发（Agent 稳定性）","https://maimai.cn/n/job/geo/IuxtxKfieWt7DyKXOuAbvg"],
+  [50,"网易 (NetEase)","中国","游戏与互联网","中等（老牌大厂较稳）","徐汇区云锦路683号西岸国际传媒港（~28分钟）","Java 后端 / AI 应用开发","https://hr.163.com/"],
+  [51,"明略科技","中国","企业 AI 与知识图谱","中等","徐汇区云锦路701号 AI Tower 29层（~28分钟）","大模型 / AI Agent 工程","https://www.mininglamp.com/"],
+  [52,"依图科技 (YITU)","中国","AI 视觉与大模型","中等","徐汇区云锦路701号西岸人工智能中心（~28分钟）","AI 算法 / 软件工程","https://www.yitutech.com/"],
+  [53,"麦当劳中国研发中心","美国","餐饮数字化与 IT","中低（外企较规律）","徐汇区西岸滨江“巨无霸魔方”（~28分钟）","Java / Full Stack / 数字化研发","https://www.mcdonalds.com.cn/"],
+  [54,"阶跃星辰","中国","通用大模型独角兽","中等偏高","徐汇区西岸智塔东塔楼30楼（~30分钟）","高级全栈（AI网关）/ 后端研发","https://maimai.cn/n/job/geo/Gh27_1wU7xJdCcS9fDc6bQ"],
+  [55,"无问芯穹","中国","AI 算力与推理基础设施","中等偏上","徐汇区丰谷路315弄（~30分钟）","AI 系统软件 / Agentic Infra","https://www.infinigence-ai.com/"],
+  [56,"北京奥普森科技","中国","AI Agent 应用","中等偏上","徐汇区徐汇西岸（~30分钟）","后端开发（Agent 稳定性）","https://maimai.cn/n/job/geo/Y0zceTBk2XqLDmQRHdx5mA"],
+  [57,"上海相形无迹科技","中国","AIGC / 视频创作 Agent","中等偏上","徐汇区网易西岸研发中心（~30分钟）","大模型应用工程师","https://maimai.cn/n/job/geo/0ZuyH09dKA7Ob4gx39PN7g"],
+  [58,"Checkout.com","英国","金融支付科技","中低（欧企 WLB 好）","黄浦区吉安路111号创智中心（1号线黄陂南路 ~30分钟）","Senior Software Engineer (Java)","https://www.linkedin.com/jobs/view/4461882844/"],
+  [59,"Kong","美国","API 与 AI Gateway 软件","中低（外企较稳）","黄浦区中海国际A座（马当路 ~30分钟）","Senior Software Engineer, AI Gateway","https://www.linkedin.com/jobs/view/4489485916/"],
+  [60,"Man Group（英仕曼集团）","英国","全球对冲基金与量化","中低（外企金融较稳）","黄浦区湖滨路150号企业天地1701A（~30分钟）","Senior Software Engineer","https://www.linkedin.com/jobs/view/4483845174/"],
+  [61,"Airwallex（空中云汇）","澳大利亚/新加坡","跨境金融科技","中等","黄浦区黄陂南路838弄中海国际中心（~30分钟）","Java / Full Stack / 平台研发","https://careers.airwallex.com/"],
+  [62,"普华永道 (PwC)","英国","数字化咨询与 AI 工程","中等","黄浦区湖滨路202号领展企业广场2座（~30分钟）","软件开发 / AI 数字化工程","https://www.pwccn.com/zh/careers.html"],
+  [63,"Accenture（埃森哲）","爱尔兰/美国","IT 咨询与数字化服务","中等","黄浦区淮海中路（~30分钟）","AI / ML Engineer","https://www.linkedin.com/jobs/view/4453254895/"],
+  [64,"Red Hat（红帽）","美国","企业级开源云软件","较低（美企 WLB 标杆）","黄浦区 / 静安区核心商务区（~30-35分钟）","Java / Kubernetes / AI 平台","https://www.redhat.com/zh/jobs"],
+  [65,"Yuanjing（远景科技）","中国","绿色能源与智能物联网","中等偏上","黄浦区中山南一路736号博荟广场B座（~32分钟）","高级 Java 开发工程师","https://www.linkedin.com/jobs/view/4462832823/"],
+  [66,"太平洋保险","中国","保险科技","中低（国企较稳）","黄浦区中山南路1号（~32分钟）","Java 后端 / AI 平台","https://www.cpic.com.cn/"],
+  [67,"众安保险","中国","互联网保险科技","中等","黄浦区圆明园路169号协进大楼（~35分钟）","Java 研发 / AI 应用","https://www.zhongan.com/"],
+  [68,"德勤 (Deloitte)","英国","企业级 IT 与 AI 咨询","中等","黄浦区延安东路222号外滩中心（~35分钟）","Java / AI 解决方案工程","https://www2.deloitte.com/cn/zh/careers.html"],
+  [69,"UBS（瑞银）","瑞士","全球投资银行","中低（外资投行较稳）","黄浦区 / 陆家嘴（~35-38分钟）","Java Connectivity / 交易系统","https://www.linkedin.com/jobs/view/4467273190/"],
+  [70,"Cadence（楷登电子）","美国","EDA 软件与 AI Infra","中低（美企 EDA 较稳）","浦东新区东育路221弄前滩世贸中心（~32分钟）","Leader SWE for jedai LLM-infra","https://www.linkedin.com/jobs/view/4414492737/"],
+  [71,"天演资本","中国","量化私募资产管理","中等","浦东新区前滩中心59层（东方体育中心 ~32分钟）","资深策略平台工程师","https://maimai.cn/n/job/geo/gbbXgHaEhkmwKiHsQAubuw"],
+  [72,"Virtuos（维塔士）","新加坡","游戏研发与 AI 工具","中等","长宁区延安西路1326号生物大厦10楼（~32-35分钟）","MLE - AI Agent Platform","https://www.linkedin.com/jobs/view/4485820123/"],
+  [73,"戴尔 (Dell)","美国","企业 IT 与云计算","较低（美企 955）","长宁区长宁路999号（中山公园 ~32分钟）","Software / Cloud Engineer","https://jobs.dell.com/"],
+  [74,"Meetsocial（飞书深诺）","中国","出海数字营销科技","中等","长宁区娄山关路35号新虹桥大厦（~35-38分钟）","Senior AI Agent Engineer","https://www.linkedin.com/jobs/view/4466199415/"],
+  [75,"Eaton（伊顿）","美国/爱尔兰","动力管理与工业自动化","较低（外企 955）","长宁区临虹路280弄3号（2号线淞虹路 ~38-40分钟）","AI Solution Expert","https://www.linkedin.com/jobs/view/4485821101/"],
+  [76,"Bosch China（博世中国）","德国","汽车与工业技术","较低（德企 955 标杆）","长宁区福泉北路333号（2号线淞虹路 ~38-40分钟）","AI Platform / 智驾架构师","https://maimai.cn/n/job/geo/MnF_FnO6PNMXRk78bZbjtQ"],
+  [77,"江森自控 (Johnson Controls)","爱尔兰/美国","智慧建筑与工业软件","较低（外企 955）","长宁区福泉北路518号（2号线淞虹路 ~38-40分钟）","IoT / AI / 云平台软件工程","https://jobs.johnsoncontrols.com/"],
+  [78,"联合利华 (Unilever)","英国/荷兰","快消品数字化研发","较低（外企 955）","长宁区福泉北路33号 / 临新路66号（~38-40分钟）","IT 架构 / 数字化研发 / 数据 AI","https://careers.unilever.com/"],
+  [79,"携程（Trip.com）","中国","在线旅游互联网","中等（支持混合办公）","长宁区金钟路968号凌空SOHO（~38-40分钟）","Java 开发 / AI Agent 开发","https://job.ctrip.com/"],
+  [80,"爱奇艺","中国","视频流媒体","中等","长宁区临虹路365号爱奇艺创新大厦（~38-40分钟）","Java 后端 / AI Agent 应用","https://zhaopin.iqiyi.com/"],
+  [81,"Amazon / AWS","美国","云计算与 AI 服务","中等","徐汇区 / 长宁来福士广场（~30分钟）","Applied Scientist / Solutions Architect","https://www.linkedin.com/jobs/view/4490392945/"],
+  [82,"Booking.com","荷兰/美国","全球在线旅游","较低（欧企 WLB 好）","静安区南京西路1601号越洋广场（~32-35分钟）","Backend Developer / SRE","https://www.linkedin.com/jobs/view/4464527525/"],
+  [83,"EA (Electronic Arts)","美国","全球游戏大厂","中低（欧美外企较规律）","静安区南京西路1515号静安嘉里中心（~32-35分钟）","(Senior) Full Stack Engineer (Java)","https://www.linkedin.com/jobs/view/4464776087/"],
+  [84,"SAP（静安办公点）","德国","企业级 ERP 与云软件","较低（德企 955 标杆）","静安区南京西路1717号会德丰国际广场（~32-35分钟）","Senior Software Engineer (Java + AI)","https://jobs.sap.com/"],
+  [85,"Riot Games（拳头游戏）","美国","全球游戏大厂","中低（美企 WLB 好）","静安区南京西路博华广场（~32分钟）","Senior Software Engineer, Tools","https://www.linkedin.com/jobs/view/4472108365/"],
+  [86,"赛诺菲 (Sanofi)","法国","跨国制药与数字创新","较低（法企 955）","静安区延安中路1228号静安嘉里中心3座（~32分钟）","数字化 / AI 制药 / 软件工程","https://jobs.sanofi.cn/"],
+  [87,"礼来 (Eli Lilly)","美国","跨国制药与数字医疗","较低（美企 955）","静安区石门一路288号兴业太古汇一座（~32分钟）","IT / 数字医疗软件工程","https://careers.lilly.com/"],
+  [88,"欧莱雅 (L'Oréal)","法国","美妆科技与数字化","较低（法企 955）","静安区南京西路1601号越洋广场（~32分钟）","AI 算法 / 软件架构 / 数字化","https://careers.loreal.com/"],
+  [89,"ALTEN China（欧立腾）","法国","工程与 IT 技术咨询","中低（欧企 955）","静安区恒通路268号凯德星贸大厦（1号线汉中路 ~32分钟）","AI Expert","https://www.linkedin.com/jobs/view/4480777761/"],
+  [90,"上海微辰星图科技","中国","企业 AI 本体与 Agent","中等偏上","静安区曲阜路地铁站附近（~35分钟）","AI 业务架构师 / FDE","https://maimai.cn/n/job/geo/nil8k24Q2DcP0BUrelj70A"],
+  [91,"TapTap / 心动网络","中国","游戏社区与 AI 工具","中等（较弹性）","静安区万荣路700号 / 灵石路（1号线马戏城 ~38分钟）","Java 后端 / AI 应用工具","https://www.xd.com/"],
+  [92,"飞利浦 (Philips)","荷兰","健康科技与医疗 AI","较低（欧企 955）","静安区灵石路718号宁汇广场（~38分钟）","AI / LLM Application Engineer","https://www.careers.philips.com/"],
+  [93,"合合信息 (IntSig)","中国","AI-Native 文档与大模型","中等","静安区万荣路1256号云立方（~38分钟）","AI 全栈开发 / Agent / 大模型","https://www.intsig.com/"],
+  [94,"卫宁健康 (Winning Health)","中国","医疗信息化与 AI","中低（较稳定）","静安区寿阳路99弄9号卫宁健康大厦（~38分钟）","Java 微服务 / AI 应用工程师","https://www.winning.com.cn/"],
+  [95,"Schneider Electric（施耐德电气）","法国","能源管理与工业自动化","较低（法企 955）","普陀区云岭东路89号长风国际大厦（~38-40分钟）","AI Engineer I / Senior SWE I","https://www.linkedin.com/jobs/view/4477910157/"],
+  [96,"滴滴 (DiDi)","中国","出行与 AI 平台","中等（平台中台较稳）","普陀区西康路1143号鸿寿坊（~38-40分钟）","Java 开发-模型推理 / 风控架构","https://maimai.cn/n/job/geo/ZzAlGrzyGlJHTUTbbwzJig"],
+  [97,"Google","美国","互联网与系统软件","较低（美企 WLB 标杆）","浦东新区世纪大道100号环球金融中心（~38-40分钟）","软件工程师，系统界面 (Java/Kotlin)","https://www.linkedin.com/jobs/view/4490197774/"],
+  [98,"Apple","美国","消费电子与 AI 平台","中低（美企大厂较稳）","浦东新区世纪大道1229号（~38-40分钟）","Software / AI Platform Engineer","https://jobs.apple.com/zh-cn/search?location=shanghai-SHG"],
+  [99,"Agilent Technologies（安捷伦）","美国","生命科学与分析仪器","较低（美企 955）","虹口区四川北路1350号利通广场（~40分钟）","Software Engineering – AI Agent","https://www.linkedin.com/jobs/view/4490795650/"],
+  [100,"Whatnot","美国","跨境电商直播平台","中等（100% 远程）","Shanghai (Remote · 远程办公)","Senior Fullstack Engineer - China","https://www.linkedin.com/jobs/view/4461226672/"]
+];
+
+const tbody = document.getElementById("tbody");
+const qEl = document.getElementById("q");
+const intEl = document.getElementById("intensity");
+const ctyEl = document.getElementById("country");
+const statsEl = document.getElementById("stats");
+
+function badgeClass(txt) {
+  if (txt.includes("较低") || txt.includes("中低")) return "b-low";
+  if (txt.includes("偏高")) return "b-high";
+  return "b-mid";
+}
+
+function matchCountry(c, filter) {
+  if (!filter) return true;
+  if (filter === "中国") return c.includes("中国");
+  if (filter === "美国") return c.includes("美国");
+  if (filter === "欧洲") return /德|法|英|荷|比|瑞|爱尔兰/.test(c);
+  if (filter === "亚太") return /新加坡|澳大利亚/.test(c);
+  return true;
+}
+
+function render() {
+  const q = qEl.value.trim().toLowerCase();
+  const iv = intEl.value;
+  const cv = ctyEl.value;
+  const rows = JOBS.filter(j => {
+    const text = j.join(" ").toLowerCase();
+    if (q && !text.includes(q)) return false;
+    if (iv === "低" && !(j[4].includes("较低") || j[4].includes("中低"))) return false;
+    if (iv === "中" && !j[4].startsWith("中等")) return false;
+    if (iv === "偏高" && !(j[4].includes("偏高") || j[4].includes("高"))) return false;
+    if (!matchCountry(j[2], cv)) return false;
+    return true;
+  });
+  statsEl.textContent = `当前显示 ${rows.length} / 100 家`;
+  tbody.innerHTML = rows.map(j => `
+    <tr>
+      <td>${j[0]}</td>
+      <td><strong>${j[1]}</strong></td>
+      <td>${j[2]}</td>
+      <td>${j[3]}</td>
+      <td><span class="badge ${badgeClass(j[4])}">${j[4]}</span></td>
+      <td>${j[5]}</td>
+      <td>${j[6]}</td>
+      <td><a class="src" href="${j[7]}" target="_blank" rel="noopener noreferrer">${j[7]}</a></td>
+    </tr>
+  `).join("");
+}
+
+qEl.addEventListener("input", render);
+intEl.addEventListener("change", render);
+ctyEl.addEventListener("change", render);
+
+const root = document.documentElement;
+const savedTheme = localStorage.getItem("interview-notes-theme");
+if (savedTheme === "dark") root.setAttribute("data-theme", "dark");
+document.getElementById("themeBtn").addEventListener("click", () => {
+  const next = root.getAttribute("data-theme") === "dark" ? "light" : "dark";
+  if (next === "dark") root.setAttribute("data-theme", "dark");
+  else root.removeAttribute("data-theme");
+  localStorage.setItem("interview-notes-theme", next);
+});
+
+render();
+</script>
+</body>
+</html>
